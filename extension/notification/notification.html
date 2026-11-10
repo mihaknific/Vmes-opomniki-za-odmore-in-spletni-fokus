@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vmes: opomniki za odmore in spletni fokus — opomnik</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon-96.svg?v=20261029-2">
+  <link rel="stylesheet" href="notification.css">
+  <link rel="stylesheet" href="../lib/appearance.css">
+</head>
+<body>
+  <main class="notification-card">
+    <div class="card-top-bar">
+      <div class="brand"><img src="../icons/icon-48.png?v=20261029-2" alt=""><span>VMES</span></div>
+      <button id="close" class="close-icon-btn" type="button" aria-label="Zapri opomnik" title="Zapri opomnik">✕</button>
+    </div>
+    <div class="rule"></div>
+    <div class="eyebrow">OPOMNIK</div>
+    <img id="reminder-image" class="reminder-image hidden" alt="">
+    <h1 id="title">Opomnik</h1>
+    <p id="message">Čas je za opomnik.</p>
+    <div class="progress" aria-hidden="true"><i id="progress-bar"></i></div>
+    <div class="actions">
+      <button id="done" class="primary" type="button"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:6px"><polyline points="20 6 9 17 4 12"/></svg>Zaključeno</button>
+      <button id="snooze" class="secondary" type="button"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:6px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Preloži</button>
+    </div>
+  </main>
+<script src="../lib/core.js"></script><script src="../lib/appearance.js"></script><script src="../lib/sounds.js"></script><script src="notification.js"></script>
+</body>
+</html>

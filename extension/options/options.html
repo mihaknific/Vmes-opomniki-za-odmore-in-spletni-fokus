@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vmes: opomniki za odmore in spletni fokus — nastavitve</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon-96.svg?v=20261029-2">
+  <link rel="stylesheet" href="options.css">
+  <link rel="stylesheet" href="../vmes-navigation.css">
+  <link rel="stylesheet" href="../lib/appearance.css">
+</head>
+<body>
+  <div class="app">
+    <header class="top-bar site-header vmes-site-top-bar vmes-options-nav">
+      <a href="../index.html" class="brand vmes-brand" aria-label="Vmes, domača stran">
+        <img class="vmes-mark" src="../icons/icon-48.svg?v=20261029-2" alt="">
+        <span class="vmes-wordmark">vmes<span>.</span></span>
+        <span class="vmes-section">Nastavitve</span>
+      </a>
+      <nav class="nav-links" aria-label="Glavna navigacija">
+        <a href="../exercises/breathing.html" class="nav-btn" aria-label="Dihanje" title="Dihanje">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+          <span>Dihanje</span>
+        </a>
+        <a href="../exercises/eyes.html" class="nav-btn" aria-label="Vaje za oči" title="Vaje za oči">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Vaje za oči</span>
+        </a>
+        <a href="../exercises/stretches.html" class="nav-btn" aria-label="Vaje med sedenjem" title="Vaje med sedenjem">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M5 9l7 2 7-2"/><path d="M12 11v5l-4 5"/><path d="M12 16l4 5"/></svg>
+          <span>Gibanje</span>
+        </a>
+      </nav>
+    </header>
+    <header class="mobile-topbar">
+      <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-controls="settings-sidebar" aria-expanded="false" aria-label="Odpri meni"><span class="mobile-menu-icon" aria-hidden="true"></span></button>
+      <div class="mobile-topbar-brand"><img src="../icons/icon-96.svg?v=20261029-2" alt=""><strong>Vmes</strong></div>
+    </header>
+    <div id="sidebar-backdrop" class="sidebar-backdrop" hidden></div>
+    <div id="global-modal" class="global-modal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-message">
+        <h2 id="modal-title" class="modal-title">Opozorilo</h2>
+        <div id="modal-message" class="modal-message"></div>
+        <div class="modal-actions">
+          <button id="modal-cancel" type="button" class="secondary hidden">Prekliči</button>
+          <button id="modal-confirm" type="button" class="primary">V redu</button>
+        </div>
+      </div>
+    </div>
+    <aside id="settings-sidebar" class="sidebar">
+      <div class="sidebar-heading">UPRAVLJANJE</div>
+      <nav aria-label="Nastavitve">
+        <a href="#reminders" class="side-link active" data-nav="reminders">Opomniki</a>
+        <a href="#reminder/new" class="side-link side-link-action" data-nav="reminder-editor">+ Nov opomnik</a>
+        <a href="#notifications" class="side-link" data-nav="notifications">Obvestila</a>
+        <a href="#focus" class="side-link" data-nav="focus">Omejitve in fokus</a>
+        <a href="#focus/new" class="side-link side-link-action" data-nav="focus-add">+ Dodaj omejitev</a>
+        <a href="#stats" class="side-link" data-nav="stats">Statistika</a>
+        <a href="#history" class="side-link" data-nav="history">Zgodovina</a>
+        <a href="#appearance" class="side-link" data-nav="appearance">Videz</a>
+        <a href="#privacy" class="side-link" data-nav="privacy">Zasebnost</a>
+        <a href="#data" class="side-link" data-nav="data">Podatki</a>
+        <a href="#about" class="side-link" data-nav="about">O aplikaciji</a>
+      </nav>
+
+    </aside>
+
+    <main class="content">
+      <!-- PODSTRAN 1: SEZNAM OPOMNIKOV (DASHBOARD) -->
+      <section id="reminders" class="page-section active-page">
+        <div class="page-head">
+          <div>
+            <div class="eyebrow">OPOMNIKI</div>
+            <h1>Opomniki</h1>
+          </div>
+          <button class="primary" id="add-top" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nov opomnik
+          </button>
+        </div>
+        <div class="reminder-list-heading">
+          <h2 class="sr-only">Vaši opomniki</h2>
+          <p id="reminder-summary" class="sr-only" aria-live="polite">Nalaganje opomnikov …</p>
+        </div>
+        <div class="reminder-control-row">
+          <div class="filter-pills" id="filter-pills" role="group" aria-label="Hitri filtri opomnikov">
+            <button class="pill-stat pill-selected" id="stat-all" data-filter="all" type="button" aria-pressed="true" aria-label="Vsi opomniki"><span class="filter-label-full">Vsi</span><span class="filter-label-short" aria-hidden="true">Vsi</span><b id="stat-all-count">0</b></button>
+            <button class="pill-stat pill-active" id="stat-enabled" data-filter="enabled" type="button" aria-pressed="false" aria-label="Aktivni opomniki"><span class="filter-label-full">Aktivni</span><span class="filter-label-short" aria-hidden="true">Aktivni</span><b id="stat-enabled-count">0</b></button>
+            <button class="pill-stat pill-muted" id="stat-disabled" data-filter="disabled" type="button" aria-pressed="false" aria-label="Izklopljeni opomniki"><span class="filter-label-full">Izklopljeni</span><span class="filter-label-short" aria-hidden="true">Izkl.</span><b id="stat-disabled-count">0</b></button>
+          </div>
+        </div>
+        <details class="reminder-tools">
+          <summary>Iskanje, filtri in množična dejanja</summary>
+          <div class="reminder-tools-content">
+            <fieldset class="toolbar-bulk-actions">
+              <legend>Upravljanje vseh opomnikov</legend>
+              <button class="secondary" id="enable-all" type="button" title="Vklopi vse opomnike">Vklopi vse</button>
+              <button class="secondary" id="disable-all" type="button" title="Izklopi vse opomnike">Izklopi vse</button>
+            </fieldset>
+            <div class="reminder-toolbar">
+              <div class="reminder-tool-field">
+                <label for="reminder-search">Iskanje po imenu, sporočilu ali domeni</label>
+                <input id="reminder-search" type="search" placeholder="Npr. odmor ali youtube.com">
+              </div>
+              <div class="reminder-tool-field">
+                <label for="reminder-filter">Prikaži</label>
+                <select id="reminder-filter">
+                  <option value="all">Vse opomnike</option>
+                  <option value="enabled">Samo aktivne</option>
+                  <option value="disabled">Samo izklopljene</option>
+                  <option value="site">Samo opomnike za določeno spletno mesto</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </details>
+        <div class="reminders-table" role="table" aria-label="Opomniki">
+          <div id="reminders-table-head" class="reminders-table-head" role="row" hidden>
+            <span role="columnheader">Opomnik</span>
+            <span role="columnheader">Urnik</span>
+            <span role="columnheader">Naslednji opomnik</span>
+            <span role="columnheader">Upravljanje</span>
+          </div>
+          <div id="all-reminders" class="cards" role="rowgroup"></div>
+        </div>
+      </section>
+
+      <!-- PODSTRAN 2: UREJEVALNIK OPOMNIKA (NAMENSKA CELOZASLONSKA PODSTRAN ZA NOV ALI UREDI) -->
+      <section id="reminder-editor" class="page-section">
+        <!-- Breadcrumb vrstica -->
+        <nav class="breadcrumb-bar" aria-label="Krušne drobtine">
+          <a href="#reminders" class="breadcrumb-link">Opomniki</a>
+          <span class="breadcrumb-separator"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+          <span id="breadcrumb-current" class="breadcrumb-current">Nov opomnik</span>
+        </nav>
+
+        <div class="editor-header">
+          <div class="eyebrow" id="form-eyebrow">OPOMNIK</div>
+          <h1 id="form-heading">Ustvari nov opomnik</h1>
+          <p class="lead" id="form-subheading">Vse nastavitve za ta opomnik na enem mestu.</p>
+        </div>
+
+        <!-- Hitre predloge samo za nov opomnik -->
+        <div id="presets-container">
+          <div class="subhead" style="margin-bottom:8px">Začni s predlogo</div>
+          <div class="preset-grid" aria-label="Predloge opomnikov" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+            <button class="preset-card" type="button" data-preset="eyes"><span class="preset-icon" data-preset-icon="eye" aria-hidden="true"></span><span><strong>Odmor za oči</strong><small>Pogled v daljavo za razbremenitev vida</small><span class="preset-badge">10 min · vaja za oči</span></span></button>
+            <button class="preset-card" type="button" data-preset="movement"><span class="preset-icon" data-preset-icon="stretch" aria-hidden="true"></span><span><strong>Raztezanje</strong><small>Kratek odmor za gibanje</small><span class="preset-badge">20 min · raztezanje</span></span></button>
+            <button class="preset-card" type="button" data-preset="water"><span class="preset-icon" data-preset-icon="water-glass" aria-hidden="true"></span><span><strong>Voda</strong><small>Opomnik za nekaj požirkov</small><span class="preset-badge">5 min</span></span></button>
+          </div>
+          <details class="preset-more">
+            <summary>Več predlog in opomnik po meri</summary>
+            <div class="preset-grid" aria-label="Dodatne predloge opomnikov">
+              <button class="preset-card" type="button" data-preset="breathing"><span class="preset-icon" data-preset-icon="wind" aria-hidden="true"></span><span><strong>Dihalni premor</strong><small>Kratka vodena vaja za dihanje</small><span class="preset-badge">45 min · dihalna vaja</span></span></button>
+              <button class="preset-card" type="button" data-preset="custom"><span class="preset-icon" data-preset-icon="bell" aria-hidden="true"></span><span><strong>Po meri</strong><small>Sam izberi čas in vsebino</small><span class="preset-badge">Prilagodi</span></span></button>
+            </div>
+          </details>
+        </div>
+
+        <form id="reminder-form" class="editor-unified-form">
+          <!-- KARTICA 1: OSNOVNI PODATKI -->
+          <div class="editor-card">
+            <div class="card-section-title">
+              <span class="card-step-badge">1</span>
+              <div>
+                <strong>Osnovni podatki</strong>
+                <small>Kaj vas naj opomnik opomni in kakšen videz naj ima.</small>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="name" class="field-label-bold">
+                Ime opomnika <span class="required-star">*</span>
+              </label>
+              <div class="input-with-icon">
+                <span class="input-leading-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </span>
+                <input id="name" maxlength="120" value="Odmor za oči" placeholder="Npr. Odmor za oči, kozarec vode" autocomplete="off" required class="modern-input">
+              </div>
+            </div>
+
+            <div class="field-group" style="margin-top:16px">
+              <label for="message-mode" class="field-label-bold">Besedilo ob opomniku</label>
+              <select id="message-mode" class="modern-select">
+                <option value="rotate">Samodejno menjaj sporočila</option>
+                <option value="custom">Uporabi moje besedilo</option>
+              </select>
+              <small class="field-help">Samodejna sporočila so izvirna in prilagojena vrsti opomnika.</small>
+            </div>
+            <div class="field-group" id="custom-message-field" style="margin-top:12px">
+              <div class="field-label-row">
+                <label for="message" class="field-label-bold">Moje besedilo</label>
+                <span class="field-hint-counter" id="message-counter">Kratko besedilo ob opozorilu</span>
+              </div>
+              <textarea id="message" rows="2" maxlength="500" placeholder="Kratko besedilo, ki se prikaže ob opomniku" class="modern-textarea">Poglejte za trenutek stran od zaslona.</textarea>
+            </div>
+            <p id="rotating-message-help" class="field-help hidden">Sporočila se bodo ob vsakem prikazu izmenjevala. Če želite, lahko preklopite na svoje stalno besedilo.</p>
+
+            <!-- Priporočene ikone so takoj vidne, celotna knjižnica pa se odpre po želji. -->
+            <div class="field-block" style="margin-top:16px">
+              <span class="field-label-text">Ikona opomnika</span>
+              <input type="hidden" id="reminder-icon" value="bell">
+              <div class="recommended-icon-grid" id="recommended-icon-choices" role="group" aria-label="Priporočene ikone"></div>
+              <details class="icon-library">
+                <summary>Izberi drugo ikono</summary>
+                <div class="icon-selector-grid" id="icon-selector-grid" role="group" aria-label="Vse ikone"></div>
+              </details>
+              <small class="field-help" id="icon-selected-label">Izbrana ikona: <strong>Klasičen zvonec</strong></small>
+            </div>
+
+            <details class="optional-image-settings">
+              <summary>Dodaj sliko ob opomniku <span class="optional-label">neobvezno</span></summary>
+              <div class="field-block">
+              <span class="field-label-text">Slika ob opomniku <span class="optional-label">neobvezno</span></span>
+              <div class="dropzone" id="image-dropzone" tabindex="0" role="button" aria-label="Naloži sliko opomnika">
+                <input id="reminder-image" type="file" accept="image/png,image/jpeg,image/webp,image/gif" class="sr-only" tabindex="-1" aria-hidden="true">
+                <div class="dropzone-empty" id="dropzone-empty">
+                  <div class="dropzone-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+                  <div class="dropzone-text">
+                    <strong>Izberite sliko ali jo povlecite sem</strong>
+                    <span>PNG, JPG, WebP ali GIF do 300 KB</span>
+                  </div>
+                  <span class="dropzone-browse-badge">Prebrskaj datoteke</span>
+                </div>
+                <div id="image-preview" class="image-preview hidden"></div>
+              </div>
+              <small class="field-help">Slika se shrani lokalno v Firefoxu in se prikaže ob sprožitvi opomnika v oknu ali pasu.</small>
+              </div>
+            </details>
+          </div>
+
+          <!-- KARTICA 2: KDAJ IN ČASOVNI MODEL (VERTIKALNI ENODOTIČNI IZBOR) -->
+          <!-- KARTICA 2: KDAJ IN ČASOVNI MODEL (MEDSEBOJNO IZKLJUČUJOČ ENODOTIČNI IZBOR) -->
+          <div class="editor-card">
+            <div class="card-section-title">
+              <span class="card-step-badge">2</span>
+              <div>
+                <strong>Kdaj naj se ta opomnik sproži? (Izberite 1 način)</strong>
+                <small>Vsak opomnik ima <em>točno en</em> prožilni mehanizem. Izberite tistega, ki ustreza vašemu namenu:</small>
+              </div>
+            </div>
+
+            <!-- Jasno vizualno pojasnilo medsebojne izključevalnosti -->
+            <div class="trigger-mode-notice">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span>Vsak opomnik deluje po <strong>enem samem izbranem pravilu</strong>. Nastavitve spodaj se samodejno prilagodijo izbranemu načinu.</span>
+            </div>
+
+            <!-- Skriti originalni select za 100% združljivost z vsem JavaScriptom -->
+            <select id="type" class="sr-only" aria-hidden="true" tabindex="-1">
+              <option value="interval">Časovni interval (ponavljanje)</option>
+              <option value="once">Enkratni opomnik ob datumu</option>
+              <option value="site">Spletno specifični (aktivna domena)</option>
+              <option value="schedule">Dnevni ali tedenski urnik</option>
+            </select>
+
+            <!-- Vertikalni izbor z integriranimi nastavitvami -->
+            <fieldset class="vertical-trigger-list">
+              <legend>Način proženja opomnika</legend>
+              
+              <!-- 1. INTERVAL -->
+              <div class="vertical-trigger-card active" data-type-val="interval">
+                <div class="vcard-header">
+                  <input class="trigger-type-choice sr-only" id="trigger-type-interval" name="trigger-type-choice" type="radio" value="interval" aria-label="Redni ponavljajoči interval" checked>
+                  <div class="vcard-radio"><span class="vcard-radio-dot"></span></div>
+                  <span class="vcard-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </span>
+                  <div class="vcard-titles">
+                    <div class="vcard-title-row">
+                      <strong>1. Redni ponavljajoči interval</strong>
+                      <span class="vcard-badge">Najbolj pogosto</span>
+                    </div>
+                    <small>Za redne zdravstvene in ergonomske navade med delom za računalnikom.</small>
+                    <div class="vcard-purpose-hint">
+                      <strong>Namen in primer uporabe:</strong> Sproži se vsakih X minut (npr. pravilo 20-20-20 za odmor oči, opomnik za vodo ali razgibavanje).
+                    </div>
+                  </div>
+                </div>
+                <div class="vcard-body" id="interval-field">
+                  <label for="interval" class="field-label-text">
+                    Časovni razmik med opomniki:
+                  </label>
+                  <div class="interval-input-group">
+                    <div class="interval-input-wrap">
+                      <input id="interval" type="number" min="1" max="10080" value="20" placeholder="20" class="modern-input" style="padding-left:14px!important;padding-right:54px!important;font-size:16px;font-weight:700">
+                      <span class="input-unit">minut</span>
+                    </div>
+                    <div class="interval-readable" id="interval-readable">Sproži se vsakih 20 minut (~3× na uro)</div>
+                  </div>
+                  <div class="quick-interval-row">
+                    <span class="quick-label">Hitri izbor:</span>
+                    <div class="quick-chips">
+                      <button type="button" class="interval-chip" data-min="10">10 min</button>
+                      <button type="button" class="interval-chip active" data-min="20">20 min</button>
+                      <button type="button" class="interval-chip" data-min="30">30 min</button>
+                      <button type="button" class="interval-chip" data-min="45">45 min</button>
+                      <button type="button" class="interval-chip" data-min="60">60 min (1 h)</button>
+                      <button type="button" class="interval-chip" data-min="120">120 min (2 h)</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. ENKRATNO -->
+              <div class="vertical-trigger-card" data-type-val="once">
+                <div class="vcard-header">
+                  <input class="trigger-type-choice sr-only" id="trigger-type-once" name="trigger-type-choice" type="radio" value="once" aria-label="Enkraten opomnik ob določenem datumu in uri">
+                  <div class="vcard-radio"><span class="vcard-radio-dot"></span></div>
+                  <span class="vcard-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  </span>
+                  <div class="vcard-titles">
+                    <div class="vcard-title-row">
+                      <strong>2. Enkraten opomnik ob določenem datumu in uri</strong>
+                    </div>
+                    <small>Za točno določen prihodnji dogodek ali enkratno opravilo.</small>
+                    <div class="vcard-purpose-hint">
+                      <strong>Namen in primer uporabe:</strong> Sproži se točno enkrat ob izbranem času (npr. spletni seminar, klic ob 14:30 ali zaključek dražbe). Po sprožitvi se opomnik zaključi.
+                    </div>
+                  </div>
+                </div>
+                <div class="vcard-body" id="when-field">
+                  <div class="field-group">
+                    <label for="when" class="field-label-bold">Točen datum in čas sprožitve:</label>
+                    <input id="when" type="datetime-local" class="modern-input" style="padding-left:14px!important;max-width:320px">
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. SPLETNA STRAN -->
+              <div class="vertical-trigger-card" data-type-val="site">
+                <div class="vcard-header">
+                  <input class="trigger-type-choice sr-only" id="trigger-type-site" name="trigger-type-choice" type="radio" value="site" aria-label="Omejevalnik časa na določeni spletni strani">
+                  <div class="vcard-radio"><span class="vcard-radio-dot"></span></div>
+                  <span class="vcard-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  </span>
+                  <div class="vcard-titles">
+                    <div class="vcard-title-row">
+                      <strong>3. Omejevalnik časa na določeni spletni strani</strong>
+                      <span class="vcard-badge vcard-badge-focus">Fokus & Produktivnost</span>
+                    </div>
+                    <small>Za nadzor nad časom, ki ga porabite na družbenih omrežjih, novičarskih ali video straneh.</small>
+                    <div class="vcard-purpose-hint">
+                      <strong>Namen in primer uporabe:</strong> Šteje <em>samo minute, ko dejansko brskate po tej strani</em> (npr. po 30 minutah na YouTube ali Facebooku vas opomni: »Čas je, da zaključiš z ogledom posnetkov«). Ko zaprete ali zamenjate zavihek, se merjenje ustavi.
+                    </div>
+                  </div>
+                </div>
+                <div class="vcard-body" id="site-fields-container">
+                  <div class="form-grid">
+                    <div class="field-group" id="site-field">
+                      <label for="site" class="field-label-bold">Domena ali spletna stran za spremljanje:</label>
+                      <input id="site" placeholder="youtube.com ali reddit.com" inputmode="url" autocomplete="off" class="modern-input" style="padding-left:14px!important">
+                      <small class="field-help" style="margin-top:4px;display:block">Vnesite domeno brez https:// (npr. <code>youtube.com</code>, <code>instagram.com</code>, <code>reddit.com</code>).</small>
+                    </div>
+                    <div class="field-group" id="after-field">
+                      <label for="after" class="field-label-bold">Opozori po preživetem času:</label>
+                      <div class="interval-input-wrap" style="width:100%">
+                        <input id="after" type="number" min="1" max="10080" value="30" class="modern-input" style="padding-left:14px!important">
+                        <span class="input-unit">minut</span>
+                      </div>
+                      <small class="field-help" style="margin-top:4px;display:block">Čas se sešteva samo, ko je ta zavihek odprt in aktiven.</small>
+                    </div>
+                  </div>
+                  <div id="site-behavior" class="helper-card" style="margin-top:14px">
+                    <div style="display:flex;align-items:flex-start;gap:8px">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                      <div>
+                        <strong>Kako deluje merjenje aktivnosti?</strong>
+                        <div style="font-size:12px;color:var(--muted);margin-top:2px">Šteje se izključno aktivni zavihek v ospredju Firefoxa. Če preklopite na drug zavihek ali pomanjšate okno, štoparica miruje in ne teče v prazno.</div>
+                      </div>
+                    </div>
+                    <label class="inline-check" style="margin-top:10px">
+                      <input type="checkbox" id="reset-site-timer" checked> <span>Po prikazu opomnika samodejno ponastavi števec za novo sejo</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. URNIK -->
+              <div class="vertical-trigger-card" data-type-val="schedule">
+                <div class="vcard-header">
+                  <input class="trigger-type-choice sr-only" id="trigger-type-schedule" name="trigger-type-choice" type="radio" value="schedule" aria-label="Fiksni dnevni ali tedenski urnik">
+                  <div class="vcard-radio"><span class="vcard-radio-dot"></span></div>
+                  <span class="vcard-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M20 12h2"/><path d="M2 12h2"/></svg>
+                  </span>
+                  <div class="vcard-titles">
+                    <div class="vcard-title-row">
+                      <strong>4. Fiksni dnevni ali tedenski urnik</strong>
+                    </div>
+                    <small>Za dnevne ali tedenske rutine ob točno določeni uri dneva.</small>
+                    <div class="vcard-purpose-hint">
+                      <strong>Namen in primer uporabe:</strong> Sproži se ob točno določeni uri na uri (npr. vsak delovni dan ob 16:45 »Zaključi delo in uredi mizo« ali vsak torek in četrtek ob 10:00 »Pregled načrtov«).
+                    </div>
+                  </div>
+                </div>
+                <div class="vcard-body" id="schedule-fields-container">
+                  <div class="form-grid">
+                    <div class="field-group" id="schedule-kind-field">
+                      <label for="schedule-kind" class="field-label-bold">Ponavljanje:</label>
+                      <select id="schedule-kind" class="modern-select" style="padding-left:14px!important">
+                        <option value="daily">Vsak dan ob isti uri</option>
+                        <option value="weekly">Samo ob izbranih dnevih v tednu</option>
+                      </select>
+                    </div>
+                    <div class="field-group" id="schedule-time-field">
+                      <label for="schedule-time" class="field-label-bold">Ura obvestila:</label>
+                      <input id="schedule-time" type="time" value="17:00" class="modern-input" style="padding-left:14px!important">
+                    </div>
+                  </div>
+                  <div class="field-group hidden" id="weekdays-field" style="margin-top:14px">
+                    <label class="field-label-bold">Izberite dneve v tednu:</label>
+                    <!-- Skriti original select za kompatibilnost z JS -->
+                    <select id="weekdays" multiple size="7" class="sr-only" aria-hidden="true" tabindex="-1">
+                      <option value="1">Ponedeljek</option>
+                      <option value="2">Torek</option>
+                      <option value="3">Sreda</option>
+                      <option value="4">Četrtek</option>
+                      <option value="5">Petek</option>
+                      <option value="6">Sobota</option>
+                      <option value="0">Nedelja</option>
+                    </select>
+                    <div class="weekday-chips" id="weekday-chips" role="group" aria-label="Izbira dni v tednu">
+                      <button type="button" class="weekday-chip" data-day="1" aria-label="Ponedeljek">Pon</button>
+                      <button type="button" class="weekday-chip" data-day="2" aria-label="Torek">Tor</button>
+                      <button type="button" class="weekday-chip" data-day="3" aria-label="Sreda">Sre</button>
+                      <button type="button" class="weekday-chip" data-day="4" aria-label="Četrtek">Čet</button>
+                      <button type="button" class="weekday-chip" data-day="5" aria-label="Petek">Pet</button>
+                      <button type="button" class="weekday-chip" data-day="6" aria-label="Sobota">Sob</button>
+                      <button type="button" class="weekday-chip" data-day="0" aria-label="Nedelja">Ned</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </fieldset>
+          </div>
+
+          <!-- KARTICA 3: KANALI, ZVOK IN DREMEŽ -->
+          <div class="editor-card">
+            <div class="card-section-title">
+              <span class="card-step-badge">3</span>
+              <div>
+                <strong>Obveščanje in zvok</strong>
+                <small>Kje in kako vas naj brskalnik opozori.</small>
+              </div>
+            </div>
+
+            <p class="channel-lead" style="margin-top:0">Izberi, kje želiš prejemati obvestila. Izbereš lahko več možnosti.</p>
+            <div class="channel-selector-grid">
+              <label class="channel-card">
+                <input type="checkbox" name="channel" value="system" checked>
+                <div class="channel-content">
+                  <div class="channel-top">
+                    <span class="channel-icon-svg" data-ui-icon="bell"></span>
+                    <span class="channel-title">Sistemsko obvestilo</span>
+                    <span class="channel-badge badge-free">Brez dovoljenj</span>
+                  </div>
+                  <div class="channel-desc">Obvestilo operacijskega sistema (zanesljivo tudi v ozadju).</div>
+                </div>
+              </label>
+
+              <label class="channel-card">
+                <input type="checkbox" name="channel" value="window">
+                <div class="channel-content">
+                  <div class="channel-top">
+                    <span class="channel-icon-svg" data-ui-icon="window"></span>
+                    <span class="channel-title">Ločeno okno</span>
+                    <span class="channel-badge badge-free">Brez dovoljenj</span>
+                  </div>
+                  <div class="channel-desc">Namensko kompaktno okno s sliko, gumbom za zaključek in odlogom.</div>
+                </div>
+              </label>
+
+              <label class="channel-card">
+                <input type="checkbox" name="channel" value="inpage" id="channel-inpage">
+                <div class="channel-content">
+                  <div class="channel-top">
+                    <span class="channel-icon-svg" data-ui-icon="pin"></span>
+                    <span class="channel-title">Na spletni strani</span>
+                    <span class="channel-badge badge-perm">Dovoljenje za strani</span>
+                  </div>
+                  <div class="channel-desc">Nevsiljiv pas vdelan neposredno v aktivni spletni zavihek.</div>
+                </div>
+              </label>
+            </div>
+
+            <div class="form-grid" style="margin-top:16px">
+              <details class="reminder-sound-details">
+                <summary>Zvok: <span id="reminder-sound-summary">Privzeti zvok iz nastavitev</span> <span class="optional-label">spremeni po želji</span></summary>
+                <div class="field-group">
+                <label for="reminder-sound" class="field-label-bold">Zvok za ta opomnik</label>
+                <small class="field-help">Če je zvok v nastavitvah obvestil izklopljen, se zvok opomnika ne predvaja.</small>
+                <div class="sound-select-row">
+                  <div class="select-with-icon">
+                    <span class="select-leading-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                    </span>
+                    <select id="reminder-sound" class="modern-select">
+                      <option value="default">Privzeti zvok iz nastavitev</option>
+                      <optgroup label="Posneti zvoki · Kenney CC0">
+                        <option value="soft-click">Mehak zvočni poudarek</option>
+                        <option value="clear-click">Jasen zvočni poudarek</option>
+                        <option value="gentle-switch">Mehak dvojni signal</option>
+                      </optgroup>
+                      <optgroup label="Melodični zvoki in zvončki">
+                        <option value="chime">Kristalni zvonec</option>
+                        <option value="gentle-bell">Nežen ton</option>
+                        <option value="marimba">Marimba akord</option>
+                        <option value="celesta">Svetleči zvončki (Celesta)</option>
+                      </optgroup>
+                      <optgroup label="Sprostitev in fokus">
+                        <option value="relax">Zen gong</option>
+                        <option value="tibetan-bowl">Tibetanska posoda</option>
+                        <option value="digital">Digitalni ping</option>
+                        <option value="soft-synth">Sodoben sintetični ton</option>
+                      </optgroup>
+                      <option value="none">Brez zvoka (tiho)</option>
+                    </select>
+                  </div>
+                  <button class="secondary mini-btn btn-sound-preview" id="preview-reminder-sound-btn" type="button" title="Predvajaj izbrani zvok">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Poslušaj
+                  </button>
+                </div>
+              </div>
+              </details>
+
+              <div class="snooze-toggle-card" style="margin:0">
+                <div class="snooze-info">
+                  <div class="snooze-head">
+                    <span class="snooze-icon-svg" data-ui-icon="hourglass"></span>
+                    <b>Omogoči dremež</b>
+                  </div>
+                  <small>Gumb za odlog ob prikazu opomnika.</small>
+                </div>
+                <label class="toggle-switch" aria-label="Omogoči dremež">
+                  <input type="checkbox" id="snooze" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div id="permission-hint" class="helper-card hidden" style="margin-top:16px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="channel-icon-svg" data-ui-icon="lock"></span>
+                <strong>O dovoljenjih za spletne strani</strong>
+              </div>
+              <span>Za prikaz pasu neposredno na spletnih straneh je potrebno dovoljenje za dostop do strani. »Sistemsko obvestilo« in »Ločeno okno« delujeta povsem brez dodatnih dovoljenj.</span>
+            </div>
+          </div>
+
+          <!-- KARTICA 4: DEJANJE IN AKTIVNOST OB SPROŽITVI (NOVO: VAJE & SPLETNE STRANI) -->
+          <div class="editor-card" id="card-action">
+            <div class="card-section-title">
+              <span class="card-step-badge">4</span>
+              <div>
+                <strong>Dodatno dejanje</strong>
+                <small>Po želji odprite vajo ali spletno stran, ko potrdite opomnik.</small>
+              </div>
+            </div>
+
+            <details class="action-details">
+              <summary><span id="action-details-summary">Dejanje: vaja za oči</span> <span class="optional-label">spremeni po želji</span></summary>
+            <div class="form-grid">
+              <div class="field-group">
+                <label for="action-type" class="field-label-bold">Ukrep ali vgrajena aktivnost:</label>
+                <div class="select-with-icon">
+                  <span class="select-leading-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </span>
+                  <select id="action-type" class="modern-select">
+                    <option value="none">Samo opomnik (brez odpiranja strani)</option>
+                    <option value="breathing">Vgrajena vodena dihalna vaja</option>
+                    <option value="eyes">Vgrajena vaja za oči (pravilo 20–20–20)</option>
+                    <option value="stretches">Vgrajene vaje med sedenjem</option>
+                    <option value="url">Odpri poljubno spletno stran (URL)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group hidden" id="action-url-field">
+                <div class="field-label-row">
+                  <label for="action-urls" class="field-label-bold">Spletne povezave za odpiranje:</label>
+                  <span class="field-hint-counter">1 naslov na vrstico</span>
+                </div>
+                <textarea id="action-urls" rows="3" placeholder="https://moj-koledar.si&#10;https://youtube.com/watch?v=...&#10;https://novice.si" class="modern-textarea" style="font-family:inherit;font-size:12.5px"></textarea>
+                
+                <div style="margin-top:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <label for="action-url-mode" class="field-label-bold" style="font-size:12.5px">Način odpiranja:</label>
+                  <select id="action-url-mode" class="modern-select" style="width:auto;min-height:36px;padding:6px 28px 6px 12px!important;font-size:12px">
+                    <option value="iterate">Po vrsti (ciklična rotacija: 1., nato 2., nato 3. ...)</option>
+                    <option value="all">Vse hkrati (odpri vse povezave v ločenih zavihkih)</option>
+                  </select>
+                </div>
+                <small class="field-help" style="margin-top:6px;display:block">Vnesite eno ali več povezav. Pri izbiri rotacije se bo ob vsakem opomniku odprla naslednja stran po vrsti.</small>
+              </div>
+            </div>
+
+            <div class="action-preview-card helper-card" id="action-preview-card" style="margin-top:14px">
+              <div style="display:flex;align-items:flex-start;gap:10px">
+                <div class="action-preview-icon" id="action-preview-icon" style="flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--accent)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+                <div>
+                  <strong id="action-preview-title">Samo običajno obvestilo</strong>
+                  <div id="action-preview-desc" style="font-size:12px;color:var(--muted);margin-top:2px">Ob sprožitvi se prikaže samo obvestilo z gumbom za zaključek ali odlog. Noben nov zavihek se ne bo odprl.</div>
+                </div>
+                <button type="button" class="secondary mini-btn hidden" id="preview-exercise-btn" style="margin-left:auto;white-space:nowrap">
+                  Preizkusi stran
+                </button>
+              </div>
+            </div>
+            </details>
+          </div>
+
+          <!-- KARTICA 5: PREGLED VSEH VELJAVNIH NASTAVITEV V ŽIVO -->
+          <div class="editor-card summary-card" id="reminder-summary-card">
+            <div class="card-section-title" style="margin-bottom:14px;padding-bottom:10px">
+              <span class="card-step-badge summary-badge">✓</span>
+              <div>
+                <strong>Pregled veljavnih nastavitev za ta opomnik</strong>
+                <small>Tukaj je povzetek vsega, kar bo veljalo ob shranitvi.</small>
+              </div>
+            </div>
+            <div class="summary-pills-grid" id="summary-pills-grid">
+              <div class="summary-pill"><span class="summary-pill-label">Vrsta proženja:</span><strong id="sum-type">Interval (20 min)</strong></div>
+              <div class="summary-pill"><span class="summary-pill-label">Kanal obveščanja:</span><strong id="sum-channels">Sistemsko obvestilo</strong></div>
+              <div class="summary-pill"><span class="summary-pill-label">Zvočni signal:</span><strong id="sum-sound">Privzeti zvok</strong></div>
+              <div class="summary-pill"><span class="summary-pill-label">Dremež:</span><strong id="sum-snooze">Vklopljen</strong></div>
+              <div class="summary-pill"><span class="summary-pill-label">Dejanje ob sprožitvi:</span><strong id="sum-action">Vaja za oči</strong></div>
+              <div class="summary-pill"><span class="summary-pill-label">Ikona in slika:</span><strong id="sum-visuals">Klasičen zvonec (brez slike)</strong></div>
+            </div>
+          </div>
+
+          <div id="editor-more-actions" class="editor-more-actions hidden" role="group" aria-label="Dodatna dejanja za opomnik">
+            <div class="editor-more-actions-buttons">
+              <button type="button" class="secondary" id="editor-duplicate">Podvoji opomnik</button>
+              <button type="button" class="danger" id="editor-delete">Izbriši opomnik</button>
+            </div>
+          </div>
+
+          <!-- FIKSNI STICKY TRAK Z AKCIJAMI -->
+          <div class="editor-sticky-bar">
+            <div class="sticky-bar-inner">
+              <div class="sticky-bar-info">
+                <span class="sticky-status-dot"></span>
+                <span class="sticky-status-text">Vse nastavitve so pripravljene za shranjevanje</span>
+              </div>
+              <div class="sticky-actions-group">
+                <button type="button" class="secondary" id="reset-form">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  Prekliči
+                </button>
+                <button type="submit" class="primary" id="form-submit">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><polyline points="20 6 9 17 4 12"/></svg>
+                  Shrani opomnik
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- PODSTRAN 3: SPLOŠNA OBVESTILA & ZVOK -->
+      <section id="notifications" class="page-section">
+        <div class="eyebrow">NASTAVITVE</div>
+        <h1>Obvestila in zvok</h1>
+        <p class="lead">Nastavi privzeti način obveščanja, zvok, dremež in čas brez obvestil.</p>
+        
+        <div class="settings-card">
+          <div class="field-group">
+            <label for="notification-mode" class="field-label-bold">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              Privzeti način obveščanja
+            </label>
+            <div class="select-with-icon">
+              <select id="notification-mode" class="modern-select" style="padding-left:14px!important">
+                <option value="system">Sistemsko obvestilo</option>
+                <option value="window">Ločeno okno</option>
+                <option value="system+window">Sistemsko + ločeno okno</option>
+                <option value="inpage">Na strani</option>
+                <option value="both">Sistemsko + na strani</option>
+                <option value="all">Vsi kanali (sistemsko + okno + na strani)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field-group" id="duration-field">
+              <label for="duration" class="field-label-bold">Trajanje obvestila na strani</label>
+              <select id="duration" class="modern-select" style="padding-left:14px!important">
+                <option value="5">5 sekund</option>
+                <option value="8">8 sekund</option>
+                <option value="10">10 sekund</option>
+                <option value="15">15 sekund</option>
+                <option value="30">30 sekund</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="default-snooze" class="field-label-bold">Privzeti čas dremeža</label>
+              <select id="default-snooze" class="modern-select" style="padding-left:14px!important">
+                <option value="5">5 minut</option>
+                <option value="10">10 minut</option>
+                <option value="15">15 minut</option>
+                <option value="30">30 minut</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="toggle-card-expandable">
+            <div class="toggle-row">
+              <div><strong>Čas brez obvestil</strong><small class="field-help">V izbranem časovnem oknu se opomniki ne bodo prikazovali.</small></div>
+              <label class="toggle-switch" aria-label="Preklopi Ne moti"><input type="checkbox" id="quiet-hours"><span class="switch-slider"></span></label>
+            </div>
+            <div id="quiet-hours-subpanel" class="subpanel-collapsible hidden">
+              <div class="form-grid" style="margin-top:14px">
+                <div class="field-group">
+                  <label for="quiet-from" class="field-label-bold">Od</label>
+                  <input id="quiet-from" type="time" value="22:00" class="modern-input" style="padding-left:14px!important">
+                </div>
+                <div class="field-group">
+                  <label for="quiet-to" class="field-label-bold">Do</label>
+                  <input id="quiet-to" type="time" value="06:00" class="modern-input" style="padding-left:14px!important">
+                </div>
+              </div>
+              <div class="field-group" style="margin-top:14px">
+                <label for="quiet-behavior" class="field-label-bold">Ko je v »Ne moti«</label>
+                <select id="quiet-behavior" class="modern-select" style="padding-left:14px!important">
+                  <option value="skip">Preskoči opomnik</option>
+                  <option value="queue">Prikaži ob koncu »Ne moti«</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="toggle-row">
+            <div><strong>Lokalna zgodovina dogodkov</strong><small class="field-help">Vodi lokalni dnevnik prikazanih, zaključenih in prestavljenih opomnikov.</small></div>
+            <label class="toggle-switch" aria-label="Preklopi beleženje zgodovine"><input type="checkbox" id="history-enabled" checked><span class="switch-slider"></span></label>
+          </div>
+          
+          <div class="settings-divider">Zvočna knjižnica (privzeti zvok)</div>
+          <div class="toggle-card-expandable">
+            <div class="toggle-row">
+              <div><strong>Omogoči zvok za obvestila</strong><small class="field-help">Predvaja izbrani ton pri obvestilu v oknu in na strani.</small></div>
+              <label class="toggle-switch" aria-label="Preklopi zvok"><input type="checkbox" id="sound-enabled"><span class="switch-slider"></span></label>
+            </div>
+            <div id="sound-subpanel" class="subpanel-collapsible hidden">
+              <div class="form-grid" style="margin-top:14px">
+                <div class="field-group">
+                  <label for="sound-name" class="field-label-bold">Privzeti ton</label>
+                  <div class="sound-select-row">
+                    <div class="select-with-icon" style="flex:1">
+                      <span class="select-leading-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                      </span>
+                      <select id="sound-name" class="modern-select">
+                        <optgroup label="Posneti zvoki · Kenney CC0">
+                          <option value="soft-click" selected>Mehak zvočni poudarek</option>
+                          <option value="clear-click">Jasen zvočni poudarek</option>
+                          <option value="gentle-switch">Mehak dvojni signal</option>
+                        </optgroup>
+                        <optgroup label="Melodični zvoki in zvončki">
+                          <option value="chime">Kristalni zvonec (splošno)</option>
+                          <option value="gentle-bell">Nežen ton (odmor)</option>
+                          <option value="marimba">Marimba akord (melodično)</option>
+                          <option value="celesta">Svetleči zvončki (Celesta)</option>
+                          <option value="rising-chime">Naraščajoči zvončki</option>
+                          <option value="soft-pulse">Mehak trojni ton</option>
+                        </optgroup>
+                        <optgroup label="Sprostitev in fokus">
+                          <option value="relax">Zen gong (sprostitev)</option>
+                          <option value="tibetan-bowl">Tibetanska posoda</option>
+                          <option value="wood-tap">Nežen lesen ton</option>
+                          <option value="digital">Digitalni ping (fokus)</option>
+                          <option value="soft-synth">Sodoben sintetični ton</option>
+                        </optgroup>
+                      </select>
+                    </div>
+                    <button class="secondary mini-btn btn-sound-preview" id="preview-sound-btn" type="button" title="Poslušaj privzeti ton">
+                      <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                      Poslušaj
+                    </button>
+                  </div>
+                </div>
+                <div class="field-group">
+                  <label for="sound-volume" class="field-label-bold">Glasnost: <span id="volume-val" class="volume-val">55 %</span></label>
+                  <div class="volume-slider-wrap">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg>
+                    <input id="sound-volume" type="range" min="0" max="1" step=".05" value=".55">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button class="secondary" id="test-notification" type="button" style="margin-top:10px">Preizkusi privzeti način obveščanja</button>
+          <div class="preview-note">Sistemski kanal uporablja Firefoxovo storitev in nastavitve operacijskega sistema. Zvok se predvaja v oknu in na strani.</div>
+        </div>
+      </section>
+
+      <!-- PODSTRAN: OMEJITVE & FOKUS (BLOCKLIST & TIME LIMITS) -->
+      <section id="focus" class="page-section">
+        <div class="eyebrow">PRODUKTIVNOST IN ZDRAVJE</div>
+        <h1>Omejitve spletnih strani in fokus</h1>
+        <p class="lead">Blokirajte izbrane spletne strani ali določite, koliko časa jim želite nameniti na dan. Ko čas poteče, se prikaže zaslon za osredotočenost. Šteje se samo čas, ko je stran dejavna, dnevna omejitev pa se ponastavi ob polnoči.</p>
+
+        <div class="settings-card">
+          <div class="card-section-title" style="margin-bottom:16px;padding-bottom:10px">
+            <div>
+              <strong>Dodaj novo pravilo za spletno mesto</strong>
+              <small>Vnesite domeno, ki jo želite blokirati ali časovno omejiti. Firefox bo za izbrano domeno vprašal za dovoljenje.</small>
+            </div>
+          </div>
+
+          <form id="add-block-form" class="form-grid" style="align-items:flex-end">
+            <div class="field-group" style="flex:2">
+              <label for="block-host" class="field-label-bold">Domena spletne strani:</label>
+              <input id="block-host" placeholder="npr. youtube.com, reddit.com, facebook.com" required class="modern-input" style="padding-left:14px!important">
+            </div>
+
+            <div class="field-group" style="flex:1.5">
+              <label for="block-mode" class="field-label-bold">Vrsta omejitve:</label>
+              <select id="block-mode" class="modern-select" style="padding-left:14px!important">
+                <option value="block">Stroga blokada (vedno prepovedano)</option>
+                <option value="limit">Dnevna časovna omejitev</option>
+              </select>
+            </div>
+
+            <div class="field-group hidden" id="block-limit-group" style="flex:1">
+              <label for="block-limit-minutes" class="field-label-bold">Čas na dan:</label>
+              <select id="block-limit-minutes" class="modern-select" style="padding-left:14px!important">
+                <option value="15">15 minut</option>
+                <option value="30" selected>30 minut</option>
+                <option value="45">45 minut</option>
+                <option value="60">1 ura</option>
+                <option value="120">2 uri</option>
+              </select>
+            </div>
+
+            <div class="field-group" style="flex-shrink:0">
+              <button type="submit" class="primary" style="height:44px">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:6px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Dodaj omejitev
+              </button>
+            </div>
+          </form>
+
+          <div class="settings-divider" style="margin-top:28px">Pravila spletnih strani</div>
+          
+          <div id="block-rules-list" class="cards" style="margin-top:14px">
+            <!-- Dinamično izpisano -->
+          </div>
+          <div id="block-rules-empty" class="empty" style="padding:24px 16px;text-align:center;color:var(--muted)">
+            Še ni pravil. Dodajte domeno, da jo blokirate ali določite dnevno časovno kvoto.
+          </div>
+        </div>
+      </section>
+
+      <!-- PODSTRAN 4: STATISTIKA -->
+      <section id="stats" class="page-section">
+        <div class="eyebrow">PREGLED</div>
+        <h1>Statistika</h1>
+        <p class="lead">Statistika je 100% lokalna. Meri prikaze in dejanja brez pošiljanja podatkov.</p>
+        <div id="stats-grid" class="stat-grid"></div>
+        <div class="chart-card"><div class="chart-title">Dogodki v zadnjih 7 dneh</div><div id="bars" class="bars" aria-label="Aktivnost po dnevih"></div></div>
+        <div class="stat-grid stat-grid-secondary"><div class="stat"><b id="site-minutes">0</b><span>min aktivnega časa na straneh</span></div><div class="stat"><b id="completion-rate">0 %</b><span>delež zaključenih opomnikov</span></div></div>
+      </section>
+
+      <!-- PODSTRAN 5: ZGODOVINA -->
+      <section id="history" class="page-section">
+        <div class="page-head">
+          <div>
+            <div class="eyebrow">ZGODOVINA</div>
+            <h1>Zgodovina dogodkov</h1>
+            <p class="lead">Lokalni pregled prikazanih, zaključenih, prestavljenih in zaprtih opomnikov.</p>
+          </div>
+          <button class="secondary" id="clear-history" type="button">
+            <span class="btn-icon-svg" data-ui-icon="trash"></span>
+            Počisti zgodovino
+          </button>
+        </div>
+        <div id="history-list" class="history"></div>
+      </section>
+
+      <!-- PODSTRAN 6: VIDEZ -->
+      <section id="appearance" class="page-section">
+        <div class="eyebrow">NASTAVITVE</div>
+        <h1>Videz</h1>
+        <p class="lead">Prilagodi barve, pisavo in velikost besedila. Izbira se shrani samo v tem brskalniku.</p>
+        <article class="appearance-card">
+          <div class="appearance-card-heading"><span class="eyebrow">BARVE</span><h2>Izberi barvno shemo</h2><p>Zelena tema Vmes je privzeta. Izberi drugo svetlo, temno ali samodejno barvno shemo.</p></div>
+          <details class="theme-group" open>
+            <summary>Svetle teme</summary>
+            <div class="theme-options" role="group" aria-label="Svetle barvne sheme">
+              <button class="theme-option" type="button" data-theme-choice="indigo" aria-pressed="false"><span class="theme-swatch theme-swatch-indigo"><i></i><i></i><i></i></span><span><strong>Indigo</strong><small>Svetla podlaga z umirjenimi indigo poudarki.</small></span></button>
+              <button class="theme-option" type="button" data-theme-choice="mono" aria-pressed="false"><span class="theme-swatch theme-swatch-mono"><i></i><i></i><i></i></span><span><strong>Belo-črna</strong><small>Čisto bela podlaga, črno besedilo in brez barv.</small></span></button>
+              <button class="theme-option" type="button" data-theme-choice="lagoon" aria-pressed="false"><span class="theme-swatch theme-swatch-lagoon"><i></i><i></i><i></i></span><span><strong>Laguna</strong><small>Sveži odtenki vode in mete.</small></span></button>
+              <button class="theme-option" type="button" data-theme-choice="forest" aria-pressed="true"><span class="theme-swatch theme-swatch-forest"><i></i><i></i><i></i></span><span><strong>Vmes <span class="theme-default-tag">Privzeto</span></strong><small>Prijazni zeleni odtenki, usklajeni s stranjo Vmes.</small></span></button>
+              <button class="theme-option" type="button" data-theme-choice="sunset" aria-pressed="false"><span class="theme-swatch theme-swatch-sunset"><i></i><i></i><i></i></span><span><strong>Sončni zahod</strong><small>Topli koralni in marelični poudarki.</small></span></button>
+            </div>
+          </details>
+          <details class="theme-group">
+            <summary>Temne teme</summary>
+            <div class="theme-options" role="group" aria-label="Temne barvne sheme">
+              <button class="theme-option" type="button" data-theme-choice="mono-dark" aria-pressed="false"><span class="theme-swatch theme-swatch-mono-dark"><i></i><i></i><i></i></span><span><strong>Črno-bela nočna</strong><small>Črna podlaga, svetlo besedilo, brez barv.</small></span></button>
+              <button class="theme-option" type="button" data-theme-choice="dark-color" aria-pressed="false"><span class="theme-swatch theme-swatch-dark-color"><i></i><i></i><i></i></span><span><strong>Nočna</strong><small>Globoka vijolična z mehkimi poudarki.</small></span></button>
+              <button class="theme-option" type="button" data-theme-choice="ocean" aria-pressed="false"><span class="theme-swatch theme-swatch-ocean"><i></i><i></i><i></i></span><span><strong>Globoki ocean</strong><small>Temno modra in morsko zelena.</small></span></button>
+              <button class="theme-option" type="button" data-theme-choice="cyber" aria-pressed="false"><span class="theme-swatch theme-swatch-cyber"><i></i><i></i><i></i></span><span><strong>Kiber</strong><small>Temna podlaga z živahnimi poudarki.</small></span></button>
+              <button class="theme-option" type="button" data-theme-choice="synth" aria-pressed="false"><span class="theme-swatch theme-swatch-synth"><i></i><i></i><i></i></span><span><strong>Synthwave</strong><small>Vijolični in električni odtenki.</small></span></button>
+            </div>
+          </details>
+          <details class="theme-group">
+            <summary>Samodejno</summary>
+            <div class="theme-options" role="group" aria-label="Samodejna barvna shema">
+              <button class="theme-option" type="button" data-theme-choice="system" aria-pressed="false"><span class="theme-swatch theme-swatch-system"><i></i><i></i><i></i></span><span><strong>Po nastavitvi naprave</strong><small>Svetla ali temna različica glede na Firefox.</small></span></button>
+            </div>
+          </details>
+          <details class="theme-group custom-theme-group" id="custom-theme-controls">
+            <summary>Prilagodi barve <span id="custom-theme-state">Po meri ni aktivno</span></summary>
+            <p class="custom-theme-description">Izberi temo zgoraj, nato po želji prilagodi njene barve. Nova izbira teme ponastavi te barve.</p>
+            <div class="custom-color-grid" role="group" aria-label="Barve po meri">
+              <label for="custom-color-background">Ozadje strani<input id="custom-color-background" type="color" value="#f5f8f0"></label>
+              <label for="custom-color-surface">Kartice in površine<input id="custom-color-surface" type="color" value="#ffffff"></label>
+              <label for="custom-color-accent">Poudarjena barva<input id="custom-color-accent" type="color" value="#267c68"></label>
+              <label for="custom-color-text">Glavno besedilo<input id="custom-color-text" type="color" value="#253832"></label>
+              <label for="custom-color-muted">Manj poudarjeno besedilo<input id="custom-color-muted" type="color" value="#63736b"></label>
+              <label for="custom-color-border">Obrobe<input id="custom-color-border" type="color" value="#dce7dc"></label>
+            </div>
+            <button id="reset-custom-colors" class="secondary custom-theme-reset" type="button" disabled>Ponastavi na izbrano temo</button>
+          </details>
+        </article>
+        <article class="appearance-card typography-card">
+          <div class="appearance-card-heading"><span class="eyebrow">BERLJIVOST</span><h2>Pisava in velikost</h2><p>Izberi prikaz, ki ti je prijetnejši za daljše delo.</p></div>
+          <div class="typography-controls">
+            <label for="font-family">Pisava
+              <select id="font-family">
+                <option value="system">Google Sans (priporočeno)</option>
+                <option value="humanist">Človeška (Trebuchet)</option>
+                <option value="readable">Preprosta (Arial)</option>
+                <option value="serif">Serifna (Georgia)</option>
+              </select>
+            </label>
+            <label for="font-size">Velikost besedila
+              <select id="font-size">
+                <option value="compact">Kompaktna</option>
+                <option value="standard">Standardna</option>
+                <option value="large">Večja</option>
+                <option value="larger">Največja</option>
+              </select>
+            </label>
+          </div>
+        </article>
+        <p id="appearance-status" class="appearance-status" aria-live="polite"></p>
+      </section>
+
+      <!-- PODSTRAN 7: ZASEBNOST -->
+      <section id="privacy" class="page-section">
+        <div class="eyebrow">ZAUPANJE</div>
+        <h1>Zasebnost</h1>
+        <p class="lead">Opomniki, časovne omejitve in blokade strani delujejo lokalno, brez računa ali telemetrije.</p>
+        <div class="privacy-box">
+          <div class="card-info-col">
+            <strong>Podatki ostanejo lokalno</strong>
+            <p>Opomniki, nastavitve, zgodovina in lokalni čas so shranjeni izključno v vašem brskalniku Firefox.</p>
+          </div>
+        </div>
+        <div class="privacy-box">
+          <div class="card-info-col">
+            <strong>Spremljanje časa na spletnih straneh</strong>
+            <p id="site-access-copy">Dostop do strani je potreben za merjenje aktivnega časa in uveljavljanje pravil za izbrane domene.</p>
+          </div>
+          <button class="secondary" id="toggle-site-access" type="button">Omogoči spremljanje</button>
+        </div>
+        <div class="site-session-card">
+          <div class="card-info-col">
+            <strong>Trenutna seja</strong>
+            <span id="current-session">Ni aktivne seje.</span>
+          </div>
+          <button class="secondary" id="reset-current-site" type="button">Ponastavi ta čas</button>
+        </div>
+        <div class="danger-zone">
+          <div class="card-info-col">
+            <b>Ponastavi vse podatke</b>
+            <p>Izbriše vse opomnike, zgodovino, statistiko in nastavitve ter povrne privzeto stanje dodatka.</p>
+          </div>
+          <button class="danger" id="reset-all" type="button">Ponastavi vse</button>
+        </div>
+      </section>
+
+      <!-- PODSTRAN 8: PODATKI IN VARNOSTNA KOPIJA -->
+      <section id="data" class="page-section">
+        <div class="eyebrow">PODATKI</div>
+        <h1>Varnostna kopija</h1>
+        <p class="lead">Izvozite lokalne podatke ali jih prenesite v drugo namestitev Spletnega opomnika.</p>
+        <div class="data-cards-grid">
+          <div class="data-card">
+            <div class="data-card-info">
+              <span class="data-card-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
+              <div class="data-card-text">
+                <strong>Izvozi varnostno kopijo</strong>
+                <span>Ustvari lokalno JSON datoteko z vsemi opomniki, nastavitvami in zgodovino.</span>
+              </div>
+            </div>
+            <button class="primary" id="export-data" type="button">Izvozi podatke (JSON)</button>
+          </div>
+          <div class="data-card">
+            <div class="data-card-info">
+              <span class="data-card-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+              <div class="data-card-text">
+                <strong>Uvozi varnostno kopijo</strong>
+                <span>Obnovite nastavitve in opomnike iz prej izvožene JSON datoteke.</span>
+              </div>
+            </div>
+            <button class="secondary" id="import-data" type="button">Uvozi JSON</button>
+            <input id="import-file" type="file" accept="application/json,.json" hidden>
+          </div>
+        </div>
+        <div class="preview-note">Uvoz podatkov zamenja trenutno stanje šele po vaši eksplicitni potrditvi.</div>
+      </section>
+
+      <!-- PODSTRAN 9: O APLIKACIJI -->
+      <section id="about" class="page-section">
+        <div class="eyebrow">SPLETNI OPOMNIK</div>
+        <h1>O aplikaciji</h1>
+        <p class="lead">Firefoxova razširitev za opomnike, odmore, merjenje aktivnega časa ter omejevanje ali blokiranje izbranih spletnih strani.</p>
+        <div class="about-grid">
+          <div><b>Različica</b><span>0.9.2</span></div>
+          <div><b>Arhitektura</b><span>Firefox · Manifest V3</span></div>
+          <div><b>Hramba podatkov</b><span>100% lokalno (brez oblakov)</span></div>
+          <div><b>Licenca</b><span>Odprta koda · MIT</span></div>
+          <div><b>Avtor</b><span>Miha Knific</span></div>
+          <div><b>Zvočna knjižnica</b><span>6 vgrajenih akustičnih profilov</span></div>
+        </div>
+        <div class="about-initial-card">
+          <div class="about-initial-head">
+            <span class="about-initial-icon-svg"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span>
+            <strong>Vmes: opomniki za odmore in spletni fokus v0.9.2</strong>
+          </div>
+          <p>Opomniki za odmore ter časovne omejitve in blokade izbranih spletnih strani. Nastavitve ostanejo lokalno v Firefoxu.</p>
+          <a class="about-website-link" href="https://mihaknific.github.io/Vmes-opomniki-za-odmore-in-spletni-fokus/" target="_blank" rel="noopener noreferrer">Spletna stran Vmes <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+
+      <footer class="app-support-footer">
+        <p><strong>Vam je Vmes v pomoč?</strong><span>S prostovoljnim prispevkom podprite njegov nadaljnji razvoj.</span></p>
+        <a class="app-support-cta" href="https://mihaknific.github.io/podpora.html" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/></svg>
+          Prispevajte za razvoj <span aria-hidden="true">↗</span>
+        </a>
+      </footer>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+  </div>
+  <script src="../lib/core.js"></script>
+  <script src="../lib/appearance.js"></script>
+  <script src="../lib/icons.js"></script>
+  <script src="../lib/sounds.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

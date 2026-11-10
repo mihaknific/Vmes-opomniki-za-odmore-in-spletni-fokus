@@ -1,0 +1,219 @@
+.vmes-site-top-bar {
+  --surface: #ffffff;
+  --surface-alt: #fff1ca;
+  --surface-soft: #e1f1e7;
+  --text: #253832;
+  --muted: #63736b;
+  --border: #dce7dc;
+  --accent: #267c68;
+  --accent-soft: #e1f1e7;
+  --radius-sm: 8px;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  padding: 12px 28px;
+  position: relative;
+  top: 0;
+  z-index: 50;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.vmes-site-top-bar .vmes-brand {
+  min-width: 0;
+  width: auto;
+  flex: 0 1 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.vmes-site-top-bar .vmes-mark {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  border-radius: 7px;
+}
+
+.vmes-site-top-bar .vmes-wordmark {
+  flex: none;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.065em;
+  line-height: 1.2;
+}
+
+.vmes-site-top-bar .vmes-wordmark span {
+  color: var(--accent);
+}
+
+.vmes-site-top-bar .vmes-section {
+  align-self: center;
+  overflow: hidden;
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vmes-site-top-bar .nav-links {
+  width: auto;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.vmes-site-top-bar .nav-btn {
+  min-width: 0;
+  height: 40px;
+  min-height: 40px;
+  flex: 0 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+.vmes-site-top-bar .nav-btn svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.vmes-site-top-bar .nav-btn:hover,
+.vmes-site-top-bar .nav-btn.active {
+  background: var(--surface-soft);
+  color: var(--accent);
+  transform: none;
+}
+
+.vmes-site-top-bar .nav-btn.active {
+  font-weight: 750;
+}
+
+.vmes-site-top-bar .nav-btn-addon {
+  background: var(--surface-soft);
+  color: var(--accent);
+}
+
+.vmes-site-top-bar .nav-btn-addon:hover {
+  background: #d5e9db;
+  color: var(--accent);
+}
+
+.vmes-site-top-bar a:focus-visible,
+.vmes-site-top-bar button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .vmes-site-top-bar {
+    min-height: 54px;
+    flex-wrap: nowrap;
+    padding: 8px 14px;
+    gap: 8px;
+  }
+
+  .vmes-site-top-bar .vmes-brand {
+    width: auto;
+    flex: 0 1 auto;
+  }
+
+  .vmes-site-top-bar .nav-links {
+    width: auto;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .vmes-site-top-bar {
+    min-height: 48px;
+    padding: 6px 12px;
+  }
+
+  .vmes-site-top-bar .vmes-brand span {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .vmes-site-top-bar .nav-links {
+    gap: 0;
+  }
+
+  .vmes-site-top-bar .nav-links .nav-btn {
+    height: 36px;
+    min-height: 36px;
+    padding: 5px 6px;
+  }
+
+  .vmes-site-top-bar .nav-links .nav-btn-addon {
+    color: var(--accent);
+  }
+
+  .vmes-site-top-bar .nav-links .nav-btn span {
+    display: none;
+  }
+
+  .vmes-site-top-bar .nav-links .nav-btn-addon span {
+    display: inline;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .vmes-site-top-bar {
+    padding: 8px 10px;
+  }
+
+  .vmes-site-top-bar .nav-links {
+    gap: 8px;
+  }
+
+  .vmes-site-top-bar .nav-links .nav-btn {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .vmes-site-top-bar .nav-links .nav-btn-addon {
+    gap: 3px;
+    padding-inline: 4px;
+  }
+
+  .vmes-site-top-bar .nav-links .nav-btn-addon span {
+    font-size: 9px;
+  }
+}

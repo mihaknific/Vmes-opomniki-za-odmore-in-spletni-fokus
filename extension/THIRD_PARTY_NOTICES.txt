@@ -1,0 +1,37 @@
+Lucide Icons
+https://lucide.dev/
+
+Selected SVG icons in lib/icons.js are adapted from the Lucide icon set.
+Lucide is distributed under the ISC License. The full license text follows.
+
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+Kenney UI SFX Set
+https://kenney.nl/assets/ui-audio
+
+Selected OGG sound effects in extension/sounds/ are from Kenney's UI SFX Set,
+by Kenney Vleugels (Kenney.nl). The set is dedicated to the public domain under
+Creative Commons CC0 1.0 Universal. The included sound files may be used in
+personal and commercial projects; attribution is appreciated but not required.
+The full license notice is included in extension/sounds/LICENSE.txt.
+
+Google Sans
+https://github.com/googlefonts/googlesans
+
+The variable font files in extension/fonts/ are distributed under the SIL Open
+Font License, Version 1.1. The copyright notice and full license text are in
+extension/fonts/OFL.txt.

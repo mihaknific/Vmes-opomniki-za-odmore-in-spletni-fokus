@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f8f0">
+  <title>Dihanje — Vmes</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon-96.svg?v=20261029-2">
+  <link rel="stylesheet" href="exercises.css">
+  <link rel="stylesheet" href="../vmes-navigation.css">
+  <link rel="stylesheet" href="../lib/appearance.css">
+</head>
+<body class="breathing-page-body" data-breathing-theme="color">
+  <canvas class="breathing-atmosphere" id="breathing-atmosphere" aria-hidden="true"></canvas>
+  <header class="top-bar vmes-site-top-bar">
+    <a href="../index.html" class="brand vmes-brand" title="Na domačo stran Vmes">
+      <img class="vmes-mark" src="../icons/icon-48.svg?v=20261029-2" alt="">
+      <span class="vmes-wordmark">vmes<span>.</span></span>
+      <span class="vmes-section">Dihanje</span>
+    </a>
+    <nav class="nav-links" aria-label="Orodja">
+      <a href="breathing.html" class="nav-btn active" aria-label="Dihanje" title="Dihanje" aria-current="page">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+        <span>Dihanje</span>
+      </a>
+      <a href="eyes.html" class="nav-btn" aria-label="Vaje za oči" title="Vaje za oči">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Vaje za oči</span>
+      </a>
+      <a href="stretches.html" class="nav-btn" aria-label="Vaje med sedenjem" title="Vaje med sedenjem">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M5 9l7 2 7-2"/><path d="M12 11v5l-4 5"/><path d="M12 16l4 5"/></svg>
+        <span>Vaje med sedenjem</span>
+      </a>
+      <button id="settings-nav-btn" class="nav-btn breathing-settings-nav-button" type="button" aria-label="Prikaži nastavitve dihanja" aria-controls="settings-content" aria-expanded="false" title="Nastavitve dihanja">
+        <svg class="breathing-settings-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="2" fill="var(--surface)"/><circle cx="15" cy="12" r="2" fill="var(--surface)"/><circle cx="10" cy="18" r="2" fill="var(--surface)"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main class="breathing-page">
+    <section class="breathing-tool" aria-label="Vodena dihalna vaja">
+      <div class="breathing-center">
+        <div class="breathing-visual" id="breathing-visual" data-motion="still" data-glow="true">
+          <div class="breathing-halo"></div>
+          <svg class="breathing-shape" viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <radialGradient id="breathing-gradient" cx="32%" cy="27%" r="78%">
+                <stop offset="0%" stop-color="var(--breathing-color-light)"/>
+                <stop offset="100%" stop-color="var(--breathing-color)"/>
+              </radialGradient>
+              <linearGradient id="breathing-duotone" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--breathing-color-light)"/>
+                <stop offset="52%" stop-color="var(--breathing-color)"/>
+                <stop offset="100%" stop-color="var(--breathing-color-secondary)"/>
+              </linearGradient>
+            </defs>
+            <g id="breathing-rings" class="breathing-rings" aria-hidden="true">
+              <circle cx="100" cy="100" r="78" class="breathing-ring breathing-ring-outer"/>
+              <circle cx="100" cy="100" r="62" class="breathing-ring breathing-ring-middle"/>
+              <circle cx="100" cy="100" r="46" class="breathing-ring breathing-ring-inner"/>
+              <circle cx="100" cy="100" r="30" class="breathing-ring breathing-ring-core"/>
+            </g>
+            <g id="breathing-ripples" class="breathing-ripples" aria-hidden="true">
+              <circle cx="100" cy="100" r="78" class="breathing-ripple breathing-ripple-outer"/>
+              <circle cx="100" cy="100" r="62" class="breathing-ripple breathing-ripple-middle"/>
+              <circle cx="100" cy="100" r="46" class="breathing-ripple breathing-ripple-inner"/>
+              <circle id="breathing-ripple-core" cx="100" cy="100" r="30" class="breathing-ripple-core"/>
+            </g>
+            <path id="breathing-outline" class="breathing-outline"/>
+            <path id="breathing-shape-path" class="breathing-blob" fill="url(#breathing-gradient)"/>
+          </svg>
+          <img id="breathing-monk-image" class="breathing-monk-image" alt="" aria-hidden="true" hidden>
+          <button id="toggle-btn" class="breathing-orb-button" type="button" aria-label="Začni dihalno vajo"></button>
+          <div class="breathing-readout">
+            <p class="breathing-phase" id="instruction" aria-live="polite" aria-atomic="true">Začni</p>
+            <p class="breathing-countdown" id="countdown" aria-hidden="true"></p>
+          </div>
+        </div>
+        <p class="breathing-status breathing-sr-only" id="session-status" aria-live="polite" aria-atomic="true">Izberite ritem in začnite, ko ste pripravljeni.</p>
+        <p class="breathing-progress" id="session-progress" aria-label="Čas vaje" hidden><span id="session-elapsed">0:00</span><span id="time-remaining" hidden></span></p>
+        <button id="settings-backdrop" class="breathing-settings-backdrop" type="button" aria-label="Zapri nastavitve" hidden></button>
+        <section class="breathing-settings" aria-label="Nastavitve dihalne vaje">
+          <div class="breathing-settings-header">
+            <div class="breathing-settings-heading">
+              <h2>Nastavitve</h2>
+            </div>
+            <button id="settings-btn" class="breathing-settings-toggle" type="button" aria-label="Prikaži nastavitve dihanja" aria-controls="settings-content" aria-expanded="false">
+              <span id="settings-toggle-label">Prikaži nastavitve</span>
+              <svg class="breathing-settings-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+              <svg class="breathing-settings-close-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div id="settings-content" class="breathing-settings-content" hidden>
+          <p class="breathing-settings-group-title">Ritem in oblika</p>
+          <div class="breathing-quick-settings" aria-label="Osnovne nastavitve">
+          <details id="technique-accordion" class="breathing-accordion breathing-rhythm-picker">
+            <summary id="technique-button" class="breathing-accordion-summary" aria-label="Ritem dihanja" aria-expanded="false" aria-controls="technique-options">
+              <span class="breathing-setting-label">Ritem</span>
+              <span class="breathing-rhythm-current">
+                <strong id="technique-current-label">Trebušno dihanje</strong>
+                <span id="technique-current-pattern">4 · 0 · 6 · 0 s</span>
+              </span>
+              <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+            </summary>
+            <div id="technique-options" class="breathing-rhythm-options" role="group" aria-label="Izberi ritem dihanja">
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="box" data-label="Kvadratno dihanje" data-pattern="4 · 4 · 4 · 4 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Kvadratno dihanje</strong></span><span class="breathing-rhythm-pattern">4 · 4 · 4 · 4</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="relax" data-label="Dihanje 4–7–8" data-pattern="4 · 7 · 8 · 0 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Dihanje 4–7–8</strong></span><span class="breathing-rhythm-pattern">4 · 7 · 8 · 0</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="coherent" data-label="Koherentno dihanje" data-pattern="5,5 · 0 · 5,5 · 0 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Koherentno dihanje</strong></span><span class="breathing-rhythm-pattern">5,5 · 0 · 5,5 · 0</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="sigh" data-label="Fiziološki vzdih" data-pattern="2,5 · 1,5 · 0 · 6 · 1 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Fiziološki vzdih</strong></span><span class="breathing-rhythm-pattern">2,5 · 1,5 · 0 · 6 · 1</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="wimhof" data-label="Wim Hof" data-pattern="1,5 · 0 · 1,5 · 0 · 30 vdihov × 3 krogi" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Wim Hof</strong></span><span class="breathing-rhythm-pattern">1,5 · 0 · 1,5 · 0 · 30 × 3</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="pursed" data-label="Dihanje skozi priprte ustnice" data-pattern="2 · 0 · 4 · 0 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Dihanje skozi priprte ustnice</strong></span><span class="breathing-rhythm-pattern">2 · 0 · 4 · 0</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="nadi" data-label="Izmenično nosno dihanje" data-pattern="4 · 4 · 4 · 0 · 4 · 4 · 4 · 0 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Izmenično nosno dihanje</strong></span><span class="breathing-rhythm-pattern">4 · 4 · 4 · 0 × 2 strani</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="ujjayi" data-label="Ujjayi" data-pattern="4 · 0 · 6 · 0 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Ujjayi</strong></span><span class="breathing-rhythm-pattern">4 · 0 · 6 · 0</span>
+              </button>
+              <button class="breathing-rhythm-option is-selected" type="button" data-technique-choice="belly" data-label="Trebušno dihanje" data-pattern="4 · 0 · 6 · 0 s" aria-pressed="true">
+                <span class="breathing-rhythm-option-copy"><strong>Trebušno dihanje</strong></span><span class="breathing-rhythm-pattern">4 · 0 · 6 · 0</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="buteyko" data-label="Buteyko" data-pattern="3 · 0 · 3 · 3 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Buteyko</strong></span><span class="breathing-rhythm-pattern">3 · 0 · 3 · 3</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="tummo" data-label="Tummo" data-pattern="2 · 0 · 1 · 0 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Tummo</strong></span><span class="breathing-rhythm-pattern">2 · 0 · 1 · 0</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="fire" data-label="Dih ognja" data-pattern="0,75 · 0 · 0,75 · 0 s" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Dih ognja</strong></span><span class="breathing-rhythm-pattern">0,75 · 0 · 0,75 · 0</span>
+              </button>
+              <button class="breathing-rhythm-option" type="button" data-technique-choice="custom" data-label="Moj ritem" data-pattern="Po meri" aria-pressed="false">
+                <span class="breathing-rhythm-option-copy"><strong>Moj ritem</strong></span><span class="breathing-rhythm-pattern">Po meri</span>
+              </button>
+            </div>
+            <label class="breathing-tempo-control" for="breathing-tempo">
+              <span>Hitrost <output id="breathing-tempo-value" for="breathing-tempo">1,0×</output></span>
+              <input id="breathing-tempo" type="range" min="0.5" max="1.5" step="0.1" value="1" aria-label="Hitrost dihalnega ritma">
+            </label>
+            <div class="breathing-custom-rhythm" hidden>
+              <span class="breathing-advanced-label">Trajanje faz mojega ritma</span>
+              <p>Spremembe med vajo začnejo veljati takoj; pri 0 s se zadržanje preskoči.</p>
+              <label class="breathing-slider-row" for="phase-inhale">
+                <span>Vdih</span>
+                <input id="phase-inhale" type="range" min="0.5" max="15" step="0.5" value="4" data-phase="inhale">
+                <output for="phase-inhale">4 s</output>
+              </label>
+              <label class="breathing-slider-row" for="phase-hold-in">
+                <span>Zadrži po vdihu</span>
+                <input id="phase-hold-in" type="range" min="0" max="15" step="0.5" value="4" data-phase="holdIn">
+                <output for="phase-hold-in">4 s</output>
+              </label>
+              <label class="breathing-slider-row" for="phase-exhale">
+                <span>Izdih</span>
+                <input id="phase-exhale" type="range" min="0.5" max="15" step="0.5" value="4" data-phase="exhale">
+                <output for="phase-exhale">4 s</output>
+              </label>
+              <label class="breathing-slider-row" for="phase-hold-out">
+                <span>Zadrži po izdihu</span>
+                <input id="phase-hold-out" type="range" min="0" max="15" step="0.5" value="4" data-phase="holdOut">
+                <output for="phase-hold-out">4 s</output>
+              </label>
+            </div>
+          </details>
+          <p id="technique-guidance" class="breathing-technique-guidance" aria-live="polite">Štiri enako dolge faze: vdih, zadržanje, izdih in zadržanje.</p>
+          <details id="shape-accordion" class="breathing-accordion breathing-shape-choices">
+            <summary class="breathing-accordion-summary">
+              <span class="breathing-setting-label">Oblika</span>
+              <span id="shape-current-value" class="breathing-accordion-value">Organska</span>
+              <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+            </summary>
+            <div class="breathing-accordion-options breathing-choice-group" role="group" aria-label="Oblika animacije">
+              <button class="breathing-choice" type="button" data-shape="circle" aria-pressed="false">Krog</button>
+              <button class="breathing-choice" type="button" data-shape="square" aria-pressed="false">Kvadrat</button>
+              <button class="breathing-choice" type="button" data-shape="oval" aria-pressed="false">Oval</button>
+              <button class="breathing-choice is-selected" type="button" data-shape="blob" aria-pressed="true">Organska</button>
+            </div>
+          </details>
+        </div>
+
+    <div class="breathing-settings-extra">
+      <p class="breathing-settings-group-title">Zvok</p>
+      <div class="breathing-settings-rows">
+        <details id="sound-mode-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Način</span>
+            <span class="breathing-accordion-value" data-setting-value="sound-mode-select">Brez zvoka</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <p class="breathing-setting-hint">Za miren začetek je vaja tiha. Kratke tone ali podlago lahko vključiš po želji.</p>
+          <div class="breathing-accordion-options" role="group" aria-label="Način zvoka">
+            <button class="breathing-accordion-option is-selected" type="button" data-setting-target="sound-mode-select" data-value="off" aria-pressed="true">Brez zvoka</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="sound-mode-select" data-value="cues" aria-pressed="false">Kratek ton ob vsaki fazi</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="sound-mode-select" data-value="ambience" aria-pressed="false">Tiha zvočna podlaga</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="sound-mode-select" data-value="both" aria-pressed="false">Toni in podlaga</button>
+          </div>
+          <select id="sound-mode-select" aria-label="Način zvoka" hidden>
+            <option value="off" selected>Brez zvoka</option>
+            <option value="cues">Kratek ton ob vsaki fazi</option>
+            <option value="ambience">Tiha zvočna podlaga</option>
+            <option value="both">Toni in podlaga</option>
+          </select>
+        </details>
+        <details id="sound-style-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Zvočni značaj</span>
+            <span class="breathing-accordion-value" data-setting-value="sound-style-select">Stekleni zvonček</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <div class="breathing-accordion-options" role="group" aria-label="Zvočni značaj">
+            <button class="breathing-accordion-option" type="button" data-setting-target="sound-style-select" data-value="glass" aria-pressed="true">Stekleni zvonček</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="sound-style-select" data-value="warm" aria-pressed="false">Topel ton</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="sound-style-select" data-value="drop" aria-pressed="false">Kapljica</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="sound-style-select" data-value="air" aria-pressed="false">Zračen ton</button>
+          </div>
+          <select id="sound-style-select" aria-label="Zvočni značaj" hidden>
+            <option value="glass" selected>Stekleni zvonček</option>
+            <option value="warm">Topel ton</option>
+            <option value="drop">Kapljica</option>
+            <option value="air">Zračen ton</option>
+          </select>
+        </details>
+        <label class="breathing-tempo-control breathing-audio-volume" for="breathing-sound-volume">
+          <span>Glasnost <output id="breathing-sound-volume-value" for="breathing-sound-volume">30 %</output></span>
+          <input id="breathing-sound-volume" type="range" min="0" max="60" step="5" value="30" aria-label="Glasnost zvoka dihalne vaje">
+        </label>
+        <button id="sound-preview" class="btn-secondary breathing-sound-preview" type="button">Poslušaj izbrani ton</button>
+      </div>
+      <p class="breathing-settings-group-title">Prikaz</p>
+      <div class="breathing-settings-rows">
+        <details id="motif-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Lik</span>
+            <span class="breathing-accordion-value" data-setting-value="motif-select">Brez lika</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <p class="breathing-setting-hint">Lik se z dihom nežno povečuje in zmanjšuje.</p>
+          <div class="breathing-accordion-options" role="group" aria-label="Izbira lika">
+            <button class="breathing-accordion-option" type="button" data-setting-target="motif-select" data-value="none" aria-pressed="true">Brez lika</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="motif-select" data-value="monk-orange" aria-pressed="false">Meditant v oranžni opravi</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="motif-select" data-value="monk-gold" aria-pressed="false">Meditant v zlati opravi</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="motif-select" data-value="meditator-woman" aria-pressed="false">Meditantka</button>
+          </div>
+          <select id="motif-select" class="breathing-setting-select" aria-label="Izbira lika" hidden>
+            <option value="none" selected>Brez lika</option>
+            <option value="monk-orange">Meditant v oranžni opravi</option>
+            <option value="monk-gold">Meditant v zlati opravi</option>
+            <option value="meditator-woman">Meditantka</option>
+          </select>
+        </details>
+        <details id="breathing-color-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Barva lika</span>
+            <span class="breathing-accordion-value" data-setting-value="breathing-color-select">Po barvni shemi</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <p class="breathing-setting-hint">Privzeto sledi izbrani temi. Barva lika spremeni tudi njegov sij, ne pa barve strani.</p>
+          <div class="breathing-accordion-options breathing-color-options" role="group" aria-label="Barva dihalnega lika">
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="theme" aria-pressed="true"><span class="breathing-color-swatch breathing-color-swatch-theme" aria-hidden="true"></span>Po barvni shemi</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="red" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-red" aria-hidden="true"></span>Rdeča</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="orange" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-orange" aria-hidden="true"></span>Oranžna</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="amber" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-amber" aria-hidden="true"></span>Jantarna</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="teal" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-teal" aria-hidden="true"></span>Turkizna</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="green" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-green" aria-hidden="true"></span>Gozdno zelena</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="coral" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-coral" aria-hidden="true"></span>Koralna</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="blue" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-blue" aria-hidden="true"></span>Modra</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="violet" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-violet" aria-hidden="true"></span>Vijolična</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="pink" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-pink" aria-hidden="true"></span>Rožnata</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="yellow" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-yellow" aria-hidden="true"></span>Sončno rumena</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="mint" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-mint" aria-hidden="true"></span>Meta</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="sky" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-sky" aria-hidden="true"></span>Nebesno modra</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="lavender" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-lavender" aria-hidden="true"></span>Sivka</button>
+            <button class="breathing-accordion-option breathing-color-option" type="button" data-setting-target="breathing-color-select" data-value="fuchsia" aria-pressed="false"><span class="breathing-color-swatch breathing-color-swatch-fuchsia" aria-hidden="true"></span>Fuksija</button>
+          </div>
+          <select id="breathing-color-select" class="breathing-setting-select" aria-label="Barva dihalnega lika" hidden>
+            <option value="theme" selected>Po barvni shemi</option>
+            <option value="red">Rdeča</option>
+            <option value="orange">Oranžna</option>
+            <option value="amber">Jantarna</option>
+            <option value="coral">Koralna</option>
+            <option value="teal">Turkizna</option>
+            <option value="pink">Rožnata</option>
+            <option value="blue">Modra</option>
+            <option value="green">Gozdno zelena</option>
+            <option value="violet">Vijolična</option>
+            <option value="yellow">Sončno rumena</option>
+            <option value="mint">Meta</option>
+            <option value="sky">Nebesno modra</option>
+            <option value="lavender">Sivka</option>
+            <option value="fuchsia">Fuksija</option>
+          </select>
+        </details>
+        <details id="breathing-glow-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Barvni sij</span>
+            <span class="breathing-accordion-value" data-setting-value="breathing-glow-select">Vklopljen</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <p class="breathing-setting-hint">Mehak sij uporablja izbrano barvo lika; lahko ga kadar koli izklopiš.</p>
+          <div class="breathing-accordion-options" role="group" aria-label="Barvni sij lika">
+            <button class="breathing-accordion-option" type="button" data-setting-target="breathing-glow-select" data-value="on" aria-pressed="true">Vklopljen</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="breathing-glow-select" data-value="off" aria-pressed="false">Izklopljen</button>
+          </div>
+          <select id="breathing-glow-select" class="breathing-setting-select" aria-label="Barvni sij lika" hidden>
+            <option value="on" selected>Vklopljen</option>
+            <option value="off">Izklopljen</option>
+          </select>
+        </details>
+        <details id="appearance-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Videz strani</span>
+            <span class="breathing-accordion-value" data-setting-value="exercise-appearance">Barvita</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <p class="breathing-setting-hint">Izbira velja samo za dihalno vajo in se shrani v tej napravi.</p>
+          <div class="breathing-theme-groups">
+            <details class="breathing-theme-group" open>
+              <summary>Svetle teme</summary>
+              <div class="breathing-theme-options" role="group" aria-label="Svetle teme">
+                <button class="breathing-theme-option is-selected" type="button" data-setting-target="exercise-appearance" data-value="color" aria-pressed="true"><span class="breathing-theme-swatch breathing-theme-swatch-color" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Sveža</strong><small>Zelena, sončno rumena in sivkasti poudarki.</small></span></button>
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="lagoon" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-lagoon" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Laguna</strong><small>Sveži odtenki vode, neba in mete.</small></span></button>
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="forest" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-forest" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Gozd</strong><small>Umirjena zelena, listje in zemeljski toni.</small></span></button>
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="sunset" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-sunset" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Sončni zahod</strong><small>Topli koralni, marelični in jantarni toni.</small></span></button>
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="mono" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-mono" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Belo-črna</strong><small>Bela podlaga, črno besedilo in barvni prikazi.</small></span></button>
+              </div>
+            </details>
+            <details class="breathing-theme-group">
+              <summary>Temne teme</summary>
+              <div class="breathing-theme-options" role="group" aria-label="Temne teme">
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="mono-dark" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-mono-dark" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Črno-bela nočna</strong><small>Črna podlaga, belo besedilo in barvni prikazi.</small></span></button>
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="dark-color" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-night" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Nočna</strong><small>Globoko vijolična z mehkimi poudarki.</small></span></button>
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="ocean" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-ocean" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Globoki ocean</strong><small>Temno modra in morsko zelena.</small></span></button>
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="cyber" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-cyber" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Kiber</strong><small>Neonsko rožnata in vijolična.</small></span></button>
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="synth" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-synth" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Synthwave</strong><small>Vijolični in električni odtenki nočnega mesta.</small></span></button>
+              </div>
+            </details>
+            <details class="breathing-theme-group">
+              <summary>Samodejno</summary>
+              <div class="breathing-theme-options" role="group" aria-label="Samodejna tema">
+                <button class="breathing-theme-option" type="button" data-setting-target="exercise-appearance" data-value="system" aria-pressed="false"><span class="breathing-theme-swatch breathing-theme-swatch-system" aria-hidden="true"><i></i><i></i><i></i></span><span class="breathing-theme-copy"><strong>Po nastavitvi naprave</strong><small>Sledi svetlemu ali temnemu videzu sistema.</small></span></button>
+              </div>
+            </details>
+          </div>
+          <select id="exercise-appearance" class="breathing-setting-select" aria-label="Videz dihalne vaje" hidden>
+            <option value="color" selected>Barvita</option>
+            <option value="lagoon">Laguna</option>
+            <option value="forest">Gozd</option>
+            <option value="sunset">Sončni zahod</option>
+            <option value="mono">Belo-črna</option>
+            <option value="mono-dark">Črno-bela nočna</option>
+            <option value="dark-color">Nočna</option>
+            <option value="ocean">Globoki ocean</option>
+            <option value="cyber">Kiber</option>
+            <option value="synth">Synthwave</option>
+            <option value="system">Po nastavitvi naprave</option>
+          </select>
+        </details>
+        <details id="duration-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Trajanje</span>
+            <span class="breathing-accordion-value" data-setting-value="duration-select">Brez omejitve</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <div class="breathing-accordion-options" role="group" aria-label="Trajanje vaje">
+            <button class="breathing-accordion-option" type="button" data-setting-target="duration-select" data-value="60000" aria-pressed="false">1 min</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="duration-select" data-value="180000" aria-pressed="false">3 min</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="duration-select" data-value="300000" aria-pressed="false">5 min</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="duration-select" data-value="infinite" aria-pressed="true">Brez omejitve</button>
+          </div>
+          <select id="duration-select" class="breathing-setting-select" aria-label="Trajanje vaje" hidden>
+            <option value="60000" data-duration="60000">1 min</option>
+            <option value="180000" data-duration="180000">3 min</option>
+            <option value="300000" data-duration="300000">5 min</option>
+            <option value="infinite" data-duration="infinite" selected>Brez omejitve</option>
+          </select>
+        </details>
+        <details id="visual-style-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Ozadnja animacija</span>
+            <span class="breathing-accordion-value" data-setting-value="visual-style">Rast</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <div class="breathing-accordion-options" role="group" aria-label="Ozadnja animacija">
+            <button class="breathing-accordion-option" type="button" data-setting-target="visual-style" data-value="grow" aria-pressed="true">Rast</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="visual-style" data-value="fill" aria-pressed="false">Polnjenje do roba</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="visual-style" data-value="duotone" aria-pressed="false">Dvobarvni preliv</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="visual-style" data-value="rings" aria-pressed="false">Skupni valovi</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="visual-style" data-value="ripple" aria-pressed="false">Valovi navzven</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="visual-style" data-value="none" aria-pressed="false">Brez oblike</button>
+          </div>
+          <p class="breathing-setting-hint">»Brez oblike« pusti izbrani lik brez oblike; delce lahko izklopite posebej. Brez lika je prikaz prazen.</p>
+          <select id="visual-style" class="breathing-setting-select" aria-label="Ozadnja animacija" hidden>
+            <option value="grow" data-visual-style="grow" selected>Rast</option>
+            <option value="fill" data-visual-style="fill">Polnjenje do roba</option>
+            <option value="duotone" data-visual-style="duotone">Dvobarvni preliv</option>
+            <option value="rings" data-visual-style="rings">Skupni valovi</option>
+            <option value="ripple" data-visual-style="ripple">Valovi navzven</option>
+            <option value="none" data-visual-style="none">Brez oblike</option>
+          </select>
+        </details>
+        <details id="background-mode-accordion" class="breathing-settings-section breathing-accordion">
+          <summary class="breathing-accordion-summary">
+            <span class="breathing-advanced-label">Gibanje delcev</span>
+            <span class="breathing-accordion-value" data-setting-value="background-mode">Navznoter in navzven</span>
+            <svg class="breathing-accordion-chevron" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+          </summary>
+          <div class="breathing-accordion-options" role="group" aria-label="Gibanje delcev">
+            <button class="breathing-accordion-option" type="button" data-setting-target="background-mode" data-value="breath" aria-pressed="true">Navznoter in navzven</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="background-mode" data-value="orbit" aria-pressed="false">Kroženje</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="background-mode" data-value="combined" aria-pressed="false">Navznoter, navzven in kroženje</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="background-mode" data-value="center" aria-pressed="false">Zlivanje v sredino</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="background-mode" data-value="still" aria-pressed="false">Mirujoči delci</button>
+            <button class="breathing-accordion-option" type="button" data-setting-target="background-mode" data-value="off" aria-pressed="false">Brez delcev</button>
+          </div>
+          <select id="background-mode" aria-label="Gibanje delcev" hidden>
+            <option value="breath" selected>Navznoter in navzven</option>
+            <option value="orbit">Kroženje</option>
+            <option value="combined">Navznoter, navzven in kroženje</option>
+            <option value="center">Zlivanje v sredino</option>
+            <option value="still">Mirujoči delci</option>
+            <option value="off">Brez delcev</option>
+          </select>
+        </details>
+        <div class="breathing-settings-footer">
+          <span class="breathing-setting-label">Dodatno</span>
+          <div class="breathing-setting-extras">
+            <button id="words-toggle" class="breathing-words-toggle" type="button" aria-pressed="true" aria-label="Besedilo faze">
+              <span class="breathing-toggle-track" aria-hidden="true"></span>
+              <span>Besedilo faze</span>
+            </button>
+            <button id="reset-btn" class="breathing-reset-button" type="button">Ponastavi vajo</button>
+          </div>
+        </div>
+        <section class="breathing-preferences-transfer" aria-labelledby="breathing-preferences-title">
+          <h3 id="breathing-preferences-title">Prenos nastavitev</h3>
+          <p>Izvozite nastavitve v datoteko in jih uvozite na drugi napravi. Datoteka ostane pri vas; nastavitve se ne pošiljajo na strežnik.</p>
+          <div class="breathing-preferences-actions">
+            <button id="export-breathing-preferences" class="btn-secondary" type="button">Izvozi nastavitve</button>
+            <button id="import-breathing-preferences" class="btn-secondary" type="button">Uvozi nastavitve</button>
+            <input id="breathing-preferences-file" type="file" accept="application/json,.json" hidden>
+          </div>
+          <p id="breathing-preferences-status" class="breathing-preferences-status" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+    </div>
+          </div>
+        </section>
+
+    <p class="breathing-safety breathing-sr-only">Dihajte udobno in brez siljenja. Če vam postane neprijetno, prenehajte. Vaje z zadrževanjem diha ne izvajajte med vožnjo ali v vodi.</p>
+  </main>
+
+  <script src="../lib/appearance.js"></script>
+  <script src="../lib/sounds.js"></script>
+  <script src="tab-controls.js"></script>
+  <script src="breathing-preferences.js"></script>
+  <script src="breathing.js"></script>
+</body>
+</html>

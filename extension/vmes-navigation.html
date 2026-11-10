@@ -1,0 +1,23 @@
+<header class="top-bar site-header vmes-site-top-bar">
+  <a href="{{HOME_LINK}}" class="brand vmes-brand" aria-label="Vmes, domača stran">
+    <img class="vmes-mark" src="{{LOGO_PATH}}" alt="">
+    <span class="vmes-wordmark">vmes<span>.</span></span>
+    <span class="vmes-section">{{SECTION}}</span>
+  </a>
+  <nav class="nav-links" aria-label="Glavna navigacija">
+    {{ADDON_NAVIGATION}}
+    <a href="{{BREATHING_LINK}}" class="nav-btn{{BREATHING_ACTIVE}}" aria-label="Dihanje" title="Dihanje"{{BREATHING_CURRENT}}>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+      <span>Dihanje</span>
+    </a>
+    <a href="{{EYES_LINK}}" class="nav-btn{{EYES_ACTIVE}}" aria-label="Vaje za oči" title="Vaje za oči"{{EYES_CURRENT}}>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Vaje za oči</span>
+    </a>
+    <a href="{{MOVEMENT_LINK}}" class="nav-btn{{MOVEMENT_ACTIVE}}" aria-label="Vaje med sedenjem" title="Vaje med sedenjem"{{MOVEMENT_CURRENT}}>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M5 9l7 2 7-2"/><path d="M12 11v5l-4 5"/><path d="M12 16l4 5"/></svg>
+      <span>Gibanje</span>
+    </a>
+    {{SETTINGS_BUTTON}}
+  </nav>
+</header>

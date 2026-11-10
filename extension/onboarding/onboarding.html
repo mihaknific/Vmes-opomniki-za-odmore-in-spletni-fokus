@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vmes: opomniki za odmore in spletni fokus — začetek</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon-96.svg?v=20261029-2">
+  <link rel="alternate icon" type="image/png" href="../icons/icon-32.png?v=20261029-2">
+  <link rel="stylesheet" href="onboarding.css">
+  <link rel="stylesheet" href="../lib/appearance.css">
+</head>
+<body>
+<div class="bg-mesh" aria-hidden="true"></div>
+<main class="onboarding">
+  <header class="minimal-header">
+    <div class="brand">
+      <img src="../icons/icon-48.svg?v=20261029-2" alt="" class="brand-icon">
+      <span class="brand-title">Vmes</span>
+    </div>
+    <span id="step-counter" role="status" aria-live="polite" aria-atomic="true" class="sr-only">Korak 1 od 5</span>
+  </header>
+
+  <!-- Diapozitiv 1: Dobrodošlica -->
+  <section class="slide active">
+    <div class="content-block">
+      <div class="eyebrow">DOBRODOŠLI</div>
+      <h1>Odmori za oči, omejitve za več fokusa.</h1>
+      <p>Ta dodatek vas opomni na odmore in omeji čas na izbranih straneh. Vse deluje lokalno v Firefoxu — brez računa, brez sledenja.</p>
+    </div>
+
+    <div class="visual hero-visual">
+      <div class="icon-stage">
+        <img src="../icons/icon-96.svg?v=20261029-2" alt="Logotip Vmes" class="floating-logo">
+      </div>
+      <div class="feature-pills">
+        <span class="pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:5px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Brez računa</span>
+        <span class="pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:5px"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Lokalna hramba</span>
+        <span class="pill"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:5px"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>Brez sledenja</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diapozitiv 2: Vrste opomnikov -->
+  <section class="slide">
+    <div class="content-block">
+      <div class="eyebrow">TRI VRSTE OPOMNIKOV</div>
+      <h1>Intervalni, dnevni ali za posamezno stran.</h1>
+      <p>Nastavite opomnike za odmore vsakih X minut, ob točno določeni uri ali pa po pretečenem aktivnem času na izbrani spletni strani.</p>
+    </div>
+
+    <div class="visual reminder-types-visual">
+      <div class="reminder-stack">
+        <!-- 1. Intervalni opomnik -->
+        <div class="reminder-row">
+          <div class="reminder-icon-box icon-indigo">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <div class="reminder-info">
+            <div class="reminder-title-line">
+              <span class="reminder-title">Odmor za oči</span>
+              <span class="type-pill pill-indigo">Intervalni</span>
+            </div>
+            <span class="reminder-desc">Kratek pogled v daljavo za razbremenitev vida</span>
+          </div>
+          <div class="reminder-meta">
+            <span class="time-badge">Vsakih 10 min</span>
+          </div>
+        </div>
+
+        <!-- 2. Dnevni opomnik (featured) -->
+        <div class="reminder-row featured">
+          <div class="reminder-icon-box icon-amber">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="reminder-info">
+            <div class="reminder-title-line">
+              <span class="reminder-title">Zaključek delovnega dne</span>
+              <span class="type-pill pill-amber">Dnevni</span>
+            </div>
+            <span class="reminder-desc">Pregled opravljenega in pravočasen odklop</span>
+          </div>
+          <div class="reminder-meta">
+            <span class="time-badge highlight">Ob 17:00</span>
+          </div>
+        </div>
+
+        <!-- 3. Spletni opomnik -->
+        <div class="reminder-row">
+          <div class="reminder-icon-box icon-purple">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="reminder-info">
+            <div class="reminder-title-line">
+              <span class="reminder-title">Omejitev aktivnega časa</span>
+              <span class="type-pill pill-purple">Spletna seja</span>
+            </div>
+            <span class="reminder-desc">youtube.com · meri le minute v aktivnem oknu</span>
+          </div>
+          <div class="reminder-meta">
+            <span class="time-badge">Po 30 min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diapozitiv 3: Načini obveščanja -->
+  <section class="slide">
+    <div class="content-block">
+      <div class="eyebrow">OBVESTILA</div>
+      <h1>Izberite, kako vas dodatek opozori.</h1>
+      <p>Sistemsko obvestilo, pas na spletni strani ali ločeno okno — izberete tisto, kar vam najbolj ustreza. Zvok je neobvezen.</p>
+    </div>
+
+    <div class="visual notification-preview">
+      <div class="preview-toast">
+        <div class="preview-toast-top">
+          <div class="preview-app-badge">
+            <img src="../icons/icon-48.svg?v=20261029-2" alt="">
+            <span>SPLETNI OPOMNIK</span>
+          </div>
+          <span class="preview-time">ravnokar</span>
+        </div>
+        
+        <div class="preview-body">
+          <b>Odmor za oči in kratek vdih</b>
+          <span>Poglejte za 20 sekund v daljavo in sprostite ramena.</span>
+        </div>
+
+        <div class="preview-actions">
+          <button type="button" class="btn-preview-done">✓ Zaključeno</button>
+          <button type="button" class="btn-preview-snooze"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:5px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Preloži (5 min)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diapozitiv 4: Zasebnost in dovoljenja -->
+  <section class="slide">
+    <div class="content-block">
+      <div class="eyebrow">ZASEBNOST</div>
+      <h1>Vaši podatki ostanejo v Firefoxu.</h1>
+      <p>Brez zunanjih strežnikov, brez analitike. Dodatek dostopa le do strani, ki jih sami izberete.</p>
+    </div>
+
+    <div class="visual privacy-preview">
+      <div class="privacy-card">
+        <div class="privacy-badge-row">
+          <div class="shield-badge"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#5851ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="shield-text">
+            <b>Popolnoma lokalno</b>
+            <span>Nobena informacija ne zapusti brskalnika</span>
+          </div>
+        </div>
+
+        <div class="privacy-bullets">
+          <div class="p-item">
+            <span class="p-check">✓</span>
+            <div><strong>Lokalno shranjevanje:</strong> nobena informacija ne potuje na zunanje strežnike.</div>
+          </div>
+          <div class="p-item">
+            <span class="p-check">✓</span>
+            <div><strong>Nadzor nad domenami:</strong> dodatek dostopa le do tistih strani, ki jih sami izberete.</div>
+          </div>
+          <div class="p-item">
+            <span class="p-check">✓</span>
+            <div><strong>Aktivni čas:</strong> minute se štejejo le, ko je zavihek v prvem planu, nikoli v ozadju.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diapozitiv 5: Izbira začetne poti -->
+  <section class="slide">
+    <div class="content-block start-block">
+      <div class="eyebrow">KAJ ŽELITE NASTAVITI?</div>
+      <h1>Opomniki ali omejitve spletnih strani?</h1>
+      <p>Ob namestitvi so že vključeni trije opomniki: odmor za oči (10 min), razteg (20 min) in voda (5 min). Vse lahko prilagodite. Opomnike in omejitve lahko uporabljate ločeno ali skupaj.</p>
+    </div>
+    <div class="start-paths" role="group" aria-label="Izberite začetni razdelek">
+      <button class="path-card selected" type="button" data-start-path="reminders" aria-pressed="true">
+        <span class="path-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+        </span>
+        <span class="path-copy"><strong>Nastavi opomnike</strong><small>Odmori za oči, pitje vode, raztezanje in lastni urniki.</small></span>
+        <span class="path-check" aria-hidden="true">✓</span>
+      </button>
+      <button class="path-card" type="button" data-start-path="focus" aria-pressed="false">
+        <span class="path-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg>
+        </span>
+        <span class="path-copy"><strong>Nastavi spletni fokus</strong><small>Nastavi časovno omejitev ali blokado za izbrane domene.</small></span>
+        <span class="path-check" aria-hidden="true">✓</span>
+      </button>
+    </div>
+  </section>
+
+  <p id="onboarding-error" class="onboarding-error" role="alert" aria-live="assertive" hidden></p>
+  <footer>
+    <button id="skip" type="button">Preskoči</button>
+    <div class="dots" aria-hidden="true">
+      <i class="on"></i><i></i><i></i><i></i><i></i>
+    </div>
+    <button id="next" type="button">Naprej →</button>
+  </footer>
+</main>
+<script src="../lib/core.js"></script>
+<script src="../lib/appearance.js"></script>
+<script src="onboarding.js"></script>
+</body>
+</html>

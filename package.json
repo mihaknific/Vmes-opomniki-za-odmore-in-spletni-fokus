@@ -1,0 +1,19 @@
+{
+  "name": "vmes-firefox-addon",
+  "private": true,
+  "version": "0.9.2",
+  "description": "Vmes: break reminders and website focus for Firefox",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "test:core": "node scripts/core.test.mjs",
+    "test:bg": "node scripts/background.test.mjs",
+    "test:onboarding": "node scripts/onboarding.test.mjs",
+    "test:assets": "node scripts/assets.test.mjs",
+    "test:breathing-preferences": "node scripts/breathing-preferences.test.mjs",
+    "build:vmes": "node scripts/build-vmes-site.mjs",
+    "test:vmes": "npm run build:vmes && node scripts/vmes-site.test.mjs",
+    "serve:vmes": "npm run build:vmes && node scripts/serve-vmes-site.mjs",
+    "test": "npm run validate && npm run test:core && npm run test:assets && npm run test:breathing-preferences && npm run test:bg && npm run test:onboarding && npm run test:vmes",
+    "package": "node scripts/package.mjs"
+  }
+}

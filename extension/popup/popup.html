@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Vmes: opomniki za odmore in spletni fokus</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon-96.svg?v=20261029-2">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="../lib/appearance.css">
+</head>
+<body>
+<main class="popup-shell">
+  <header class="topbar">
+    <div class="brand">
+      <img src="../icons/icon-48.png?v=20261029-2" alt="" class="brand-logo" width="32" height="32">
+      <div class="brand-info">
+        <strong>Vmes</strong>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="open-settings" class="icon-button" type="button" title="Nastavitve" aria-label="Nastavitve">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="8" cy="18" r="2" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero-mini" aria-label="Naslednji opomnik">
+    <span class="eyebrow">NASLEDNJI OPOMNIK</span>
+    <strong id="next-name">Ni nastavljenih opomnikov</strong>
+    <div class="next-meta">
+      <span id="next-time" aria-live="off">Dodajte prvi opomnik.</span>
+    </div>
+    <div class="progress-track hidden" id="next-progress" role="progressbar" aria-label="Časovni napredek do naslednjega opomnika" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress-fill" id="next-progress-fill"></div>
+    </div>
+    <button id="pause-all" class="hero-toggle" type="button" aria-label="Izklopi vse opomnike"></button>
+  </section>
+  <div id="state-error" class="state-error hidden" role="alert" aria-live="assertive">
+    <span id="state-error-message"></span>
+    <button id="retry-state" class="text-button" type="button">Poskusi znova</button>
+  </div>
+
+  <section class="section">
+    <div class="section-title">
+      <h2>Vključeni opomniki</h2>
+      <button id="open-manage" class="text-button" type="button">Uredi</button>
+    </div>
+    <div id="reminder-list" class="items-list"></div>
+    <p id="more-reminders" class="more-reminders hidden"></p>
+    <div id="empty" class="empty hidden">
+      <strong>Ni aktivnih opomnikov</strong>
+      <span>Dodajte prvi opomnik ali vključite katerega od obstoječih.</span>
+    </div>
+  </section>
+
+  <details class="section focus-section">
+    <summary class="section-title">
+      <h2>Spletne omejitve</h2>
+      <span id="site-state" class="disclosure-label">Prikaži</span>
+    </summary>
+    <div id="focus-list" class="items-list"></div>
+    <div id="focus-empty" class="focus-empty hidden">
+      <span>Ni aktivnih spletnih omejitev.</span>
+      <button id="add-focus" class="text-button" type="button">+ Dodaj omejitev</button>
+    </div>
+    <p id="more-focus-rules" class="more-reminders hidden"></p>
+    <div class="focus-actions">
+      <div class="current-site-box">
+        <span class="site-label">Aktivno spletišče</span>
+        <b id="current-site">Ni na voljo</b>
+      </div>
+      <button id="enable-site" type="button">Omogoči spremljanje</button>
+      <button id="manage-focus" class="text-button" type="button">Upravljaj omejitve</button>
+    </div>
+  </details>
+
+  <details class="quick-add">
+    <summary class="quick-add-header"><strong>Dodaj opomnik</strong><span class="disclosure-label">Hitre možnosti</span></summary>
+    <div class="quick-buttons">
+      <button type="button" data-minutes="10" data-icon="eye" aria-label="Dodaj opomnik za odmor za oči vsakih 10 minut">
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>10 min</span>
+      </button>
+      <button type="button" data-minutes="5" data-icon="water-glass" aria-label="Dodaj opomnik za pitje vode vsakih 5 minut">
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14l-2 18H7L5 3z"/><path d="M6 9h12"/></svg>
+        <span>5 min</span>
+      </button>
+      <button type="button" data-minutes="20" data-icon="stretch" aria-label="Dodaj opomnik za razgibavanje vsakih 20 minut">
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>20 min</span>
+      </button>
+    </div>
+    <button id="new-reminder" class="text-button new-reminder-button" type="button">Ustvari opomnik po meri</button>
+  </details>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</main>
+<script src="../lib/core.js"></script>
+<script src="../lib/appearance.js"></script>
+<script src="../lib/icons.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

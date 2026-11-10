@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vaje za oči — Vmes</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon-96.svg?v=20261029-2">
+  <link rel="stylesheet" href="exercises.css">
+  <link rel="stylesheet" href="../vmes-navigation.css">
+  <link rel="stylesheet" href="../lib/appearance.css">
+</head>
+<body class="exercise-page-body">
+  <header class="top-bar vmes-site-top-bar">
+    <a href="../index.html" class="brand vmes-brand" title="Na domačo stran Vmes">
+      <img class="vmes-mark" src="../icons/icon-48.svg?v=20261029-2" alt="">
+      <span class="vmes-wordmark">vmes<span>.</span></span>
+      <span class="vmes-section">Vaje za oči</span>
+    </a>
+    <nav class="nav-links" aria-label="Orodja">
+      <a href="breathing.html" class="nav-btn" aria-label="Dihanje" title="Dihanje">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+        <span>Dihanje</span>
+      </a>
+      <a href="eyes.html" class="nav-btn active" aria-label="Vaje za oči" title="Vaje za oči" aria-current="page">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Vaje za oči</span>
+      </a>
+      <a href="stretches.html" class="nav-btn" aria-label="Vaje med sedenjem" title="Vaje med sedenjem">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M5 9l7 2 7-2"/><path d="M12 11v5l-4 5"/><path d="M12 16l4 5"/></svg>
+        <span>Vaje med sedenjem</span>
+      </a>
+    </nav>
+  </header>
+
+  <main class="exercise-workspace">
+    <section class="exercise-stage" aria-labelledby="exercise-title">
+      <div class="exercise-image-frame">
+        <img id="exercise-image" class="exercise-photo-art" src="images/vaje_oci/01_levo-desno_levo.png" alt="Pogled levo in desno">
+        <img id="exercise-image-paired" class="exercise-photo-art" src="images/vaje_oci/01_levo-desno_desno.png" alt="" hidden>
+        <div id="exercise-diagram" class="eyes-orbit-diagram" data-shape="square" aria-hidden="true" hidden>
+          <svg viewBox="0 0 160 160">
+            <defs>
+              <marker id="orbit-arrow-clockwise" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M1 1 8 5 1 9" class="orbit-arrow-head orbit-arrow-clockwise"></path>
+              </marker>
+              <marker id="orbit-arrow-counterclockwise" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M1 1 8 5 1 9" class="orbit-arrow-head orbit-arrow-counterclockwise"></path>
+              </marker>
+            </defs>
+            <g class="orbit-shape-group orbit-square-group">
+              <path class="orbit-shape" d="M44 44 H74 M86 44 H116 V116 H44 V44"></path>
+              <path class="orbit-direction orbit-direction-clockwise" d="M86 44 H116 V116 H44 V44 H74" marker-end="url(#orbit-arrow-clockwise)"></path>
+              <path class="orbit-direction orbit-direction-counterclockwise" d="M74 44 H44 V116 H116 V44 H86" marker-end="url(#orbit-arrow-counterclockwise)"></path>
+            </g>
+            <g class="orbit-shape-group orbit-circle-group">
+              <path class="orbit-shape" d="M84 40.2 A40 40 0 1 1 76 40.2"></path>
+              <path class="orbit-direction orbit-direction-clockwise" d="M84 40.2 A40 40 0 1 1 76 40.2" marker-end="url(#orbit-arrow-clockwise)"></path>
+              <path class="orbit-direction orbit-direction-counterclockwise" d="M76 40.2 A40 40 0 1 0 84 40.2" marker-end="url(#orbit-arrow-counterclockwise)"></path>
+            </g>
+            <g class="orbit-shape-group orbit-triangle-group">
+              <path class="orbit-shape" d="M84 39 126 116 H34 L76 39"></path>
+              <path class="orbit-direction orbit-direction-clockwise" d="M84 39 126 116 H34 L76 39" marker-end="url(#orbit-arrow-clockwise)"></path>
+              <path class="orbit-direction orbit-direction-counterclockwise" d="M76 39 34 116 H126 L84 39" marker-end="url(#orbit-arrow-counterclockwise)"></path>
+            </g>
+            <g class="orbit-shape-group orbit-inverted-triangle-group">
+              <path class="orbit-shape" d="M86 44 H126 L80 128 34 44 H74"></path>
+              <path class="orbit-direction orbit-direction-clockwise" d="M86 44 H126 L80 128 34 44 H74" marker-end="url(#orbit-arrow-clockwise)"></path>
+              <path class="orbit-direction orbit-direction-counterclockwise" d="M74 44 H34 L80 128 126 44 H86" marker-end="url(#orbit-arrow-counterclockwise)"></path>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="exercise-caption-box">
+        <span class="step-badge" id="step-badge">1 / 10</span>
+        <h1 class="exercise-caption-title" id="exercise-title" aria-live="polite">Pogled levo in desno</h1>
+        <p class="exercise-caption-desc" id="exercise-desc">Poglejte izmenično levo in desno. Ponovite 10-krat.</p>
+      </div>
+    </section>
+
+    <footer class="exercise-navigation" aria-label="Krmarjenje po vajah">
+      <div class="stepper-main-controls">
+        <button id="btn-prev" class="btn-ctrl" type="button" title="Prejšnja vaja (puščica levo)" disabled>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          <span>Prejšnja</span>
+        </button>
+        <button id="btn-next" class="btn-ctrl" type="button" title="Naslednja vaja (puščica desno)">
+          <span>Naslednja</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+        </button>
+      </div>
+    </footer>
+  </main>
+
+  <script src="../lib/appearance.js"></script>
+  <script src="tab-controls.js"></script>
+  <script src="eyes.js"></script>
+</body>
+</html>

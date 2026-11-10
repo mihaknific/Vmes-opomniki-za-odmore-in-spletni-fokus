@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f8f0">
+  <meta name="description" content="Vmes je Firefoxov dodatek z opomniki za oči, vodo in odmore ter spletnim fokusom z omejitvami in blokiranjem strani. Brez računa ali analitike; podatki ostanejo lokalno.">
+  <title>Vmes: opomniki za odmore in spletni fokus za Firefox</title>
+  <link rel="icon" type="image/svg+xml" href="icons/icon-96.svg?v=20261029-2">
+  <link rel="alternate icon" type="image/png" href="icons/icon-32.png?v=20261029-2">
+  <link rel="stylesheet" href="vmes.css">
+  <link rel="stylesheet" href="vmes-navigation.css">
+  <link rel="stylesheet" href="lib/appearance.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Preskoči na glavno vsebino</a>
+  <header class="top-bar site-header vmes-site-top-bar">
+    <a href="./" class="brand vmes-brand" aria-label="Vmes, domača stran">
+      <img class="vmes-mark" src="icons/icon-48.svg?v=20261029-2" alt="">
+      <span class="vmes-wordmark">vmes<span>.</span></span>
+      <span class="vmes-section">Opomniki in spletni fokus</span>
+    </a>
+    <nav class="nav-links" aria-label="Glavna navigacija">
+      <a href="https://addons.mozilla.org/en-US/firefox/addon/spletni-opomnik/" class="nav-btn nav-btn-addon" aria-label="Odpri Vmes v Firefox Add-ons" title="Odpri Vmes v Firefox Add-ons" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"/><path d="M8 12h8m-4-4v8"/></svg>
+        <span>Dodatek</span>
+      </a>
+      <a href="exercises/breathing.html" class="nav-btn" aria-label="Dihanje" title="Dihanje">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+        <span>Dihanje</span>
+      </a>
+      <a href="exercises/eyes.html" class="nav-btn" aria-label="Vaje za oči" title="Vaje za oči">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Vaje za oči</span>
+      </a>
+      <a href="exercises/stretches.html" class="nav-btn" aria-label="Vaje med sedenjem" title="Vaje med sedenjem">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M5 9l7 2 7-2"/><path d="M12 11v5l-4 5"/><path d="M12 16l4 5"/></svg>
+        <span>Gibanje</span>
+      </a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="vmes-hero addon-first-hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">DODATEK ZA FIREFOX</p>
+        <h1 id="hero-title">Opomniki za odmore.<br><em>Omejitve za splet.</em></h1>
+        <p class="hero-description">Odmori za oči, vodo in gibanje. Omejitve za splet po tvoji meri.</p>
+        <div class="hero-actions">
+          <a class="primary-action" href="https://addons.mozilla.org/en-US/firefox/addon/spletni-opomnik/" target="_blank" rel="noreferrer">
+            Namesti v Firefox
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+          <a class="secondary-action" href="#vaje">
+            Preizkusi vaje
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m-7-7 7 7 7-7"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="addon-overview" aria-label="Kratek pregled dodatka Vmes">
+        <div class="preview-topline">
+          <span><i aria-hidden="true"></i> PREDOGLED VMES</span>
+          <div class="preview-carousel-indicator" aria-hidden="true">
+            <span class="is-active"></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="addon-reminder-preview">
+          <span class="preview-eyebrow">NASLEDNJI OPOMNIK</span>
+          <div class="preview-reminder-heading">
+            <span class="preview-reminder-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+            <strong data-preview-name>Odmor za oči</strong>
+          </div>
+          <span class="preview-countdown" data-preview-countdown>Čez 10 min</span>
+          <span class="preview-progress" aria-hidden="true"><i data-preview-progress></i></span>
+          <div class="preview-reminder-state">
+            <span>Opomniki so vključeni</span>
+            <span class="preview-switch" aria-hidden="true"><i></i></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vaje" class="practice-section" aria-labelledby="practice-title">
+      <div class="section-heading">
+        <p class="eyebrow">TUDI BREZ DODATKA</p>
+        <h2 id="practice-title">Vaje za kratek odmor</h2>
+        <p>Vse tri vaje lahko odpreš tudi brez dodatka.</p>
+      </div>
+      <div class="practice-list">
+        <a class="practice" href="exercises/breathing.html">
+          <span class="practice-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h8a3 3 0 1 0-3-3"/><path d="M2 12h13a3 3 0 1 1-3 3"/><path d="M4 16h5a3 3 0 1 1-3 3"/></svg>
+          </span>
+          <span class="practice-copy">
+            <strong>Dihanje</strong>
+            <span>Vodena vaja z nastavljivim ritmom, zvokom in trajanjem.</span>
+          </span>
+          <span class="practice-cta">Začni vajo <span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="practice" href="exercises/eyes.html">
+          <span class="practice-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+          <span class="practice-copy">
+            <strong>Oči</strong>
+            <span>Vaje za odmik pogleda in ostrenje na blizu ter daleč.</span>
+          </span>
+          <span class="practice-cta">Začni vajo <span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="practice" href="exercises/stretches.html">
+          <span class="practice-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 7v7m0-5-6-3m6 3 6-3M12 14l-5 7m5-7 5 7"/></svg>
+          </span>
+          <span class="practice-copy">
+            <strong>Gibanje</strong>
+            <span>Kratke vaje za vrat, ramena in telo.</span>
+          </span>
+          <span class="practice-cta">Začni vajo <span aria-hidden="true">↗</span></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="addon-preview-section" aria-labelledby="addon-preview-title">
+      <div class="addon-preview-heading">
+        <p class="eyebrow">POGLED V VMES</p>
+        <h2 id="addon-preview-title">Tako sta videti opomnik in spletna omejitev</h2>
+        <p>Posnetka prikazujeta dejanski vmesnik dodatka; podatki na slikah so primeri.</p>
+      </div>
+      <div class="addon-preview-grid">
+        <figure class="addon-preview-card addon-preview-popup">
+          <figcaption>
+            <strong>Opomniki za odmore</strong>
+            <span>Naslednji opomnik, aktivni opomniki in hitri predlogi.</span>
+          </figcaption>
+          <img src="exercises/images/vmes-popup-preview.png" alt="Posnetek pojavnega okna Vmes z vzorčnimi opomniki za oči, razteg in vodo.">
+        </figure>
+        <figure class="addon-preview-card">
+          <figcaption>
+            <strong>Omejitev izbrane spletne strani</strong>
+            <span>Izberi domeno in dnevno časovno kvoto ali blokado.</span>
+          </figcaption>
+          <img src="exercises/images/vmes-site-limit-preview.png" alt="Posnetek nastavitev omejitve za youtube.com z dnevno kvoto 30 minut.">
+        </figure>
+      </div>
+    </section>
+
+    <section id="namestitev" class="addon-info-section" aria-labelledby="install-title">
+      <div class="addon-info-heading">
+        <p class="eyebrow">NAMESTITEV</p>
+        <h2 id="install-title">Namesti dodatek</h2>
+        <p>Priporočena je namestitev iz uradne Mozilline zbirke dodatkov.</p>
+      </div>
+      <div class="addon-steps">
+        <article class="addon-step">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span>
+          <h3>Namesti iz Mozille</h3>
+          <p>Na strani dodatka izberi <strong>Dodaj v Firefox</strong> za namestitev podpisane izdaje.</p>
+          <div class="addon-step-actions">
+            <a class="primary-action" href="https://addons.mozilla.org/en-US/firefox/addon/spletni-opomnik/" target="_blank" rel="noreferrer">Odpri Mozilla Add-ons <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="addon-step">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3>Potrdi namestitev</h3>
+          <p>V Firefoxovem pozivu preglej zahtevana dovoljenja in klikni <strong>Dodaj v Firefox</strong>.</p>
+        </article>
+        <article class="addon-step">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h6m4 0h6M4 17h10m4 0h2"/><circle cx="12" cy="7" r="2"/><circle cx="16" cy="17" r="2"/></svg></span>
+          <h3>Nastavi opomnike</h3>
+          <p>V uvodnem koraku izberi opomnike. Pozneje jih lahko spremeniš v nastavitvah dodatka.</p>
+        </article>
+      </div>
+      <p class="android-install-note"><strong>Firefox za Android:</strong> dodatek namesti iz Mozilla Add-ons, nato ga poišči v meniju Firefoxa pod <strong>Dodatki</strong>. Opomniki delujejo v Firefoxu — ni treba odpirati spletne strani Vmes.</p>
+    </section>
+
+    <section id="funkcije" class="addon-info-section" aria-labelledby="features-title">
+      <div class="addon-info-heading">
+        <p class="eyebrow">FUNKCIJE</p>
+        <h2 id="features-title">Kaj vključuje Vmes</h2>
+        <p>Opomnike in omejitve nastavi ločeno.</p>
+      </div>
+      <div class="addon-feature-list">
+        <article class="addon-feature" id="podrobnosti-opomniki">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <div><h3>Časovni opomniki in urnik</h3><p>Nastavi ponavljanje v izbranih časovnih razmikih ali ob določeni uri in izberi aktivne dni. Opomnik lahko preložiš ali zaženeš ročno.</p></div>
+        </article>
+        <article class="addon-feature" id="podrobnosti-omejitev">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+          <div><h3>Omejitve za izbrane strani</h3><p>Spremljaj aktivni čas na izbrani domeni, nastavi dnevno kvoto ali blokado, ko želiš zaključiti z obiskovanjem strani.</p></div>
+        </article>
+        <article class="addon-feature">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></span>
+          <div><h3>Obvestila v več oblikah</h3><p>Uporabi sistemsko obvestilo, prikaz na spletni strani ali ločeno okno. Izberi en način ali jih kombiniraj.</p></div>
+        </article>
+        <article class="addon-feature">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+          <div><h3>Izbirni zvoki</h3><p>Predvajaj kratke lokalne zvočne opomnike. Glasnost prilagodi ali zvok izklopi; vzorci se ne prenašajo z omrežja.</p></div>
+        </article>
+        <article class="addon-feature">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+          <div><h3>Lokalna statistika</h3><p>Oglej si zgodovino opomnikov, opravljenih nalog in aktivnega časa, shranjeno v svojem Firefoxu.</p></div>
+        </article>
+        <article class="addon-feature">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <div><h3>Vodene vaje za oči</h3><p>Vaje s prikazi in časovnikom za premikanje pogleda ter ostrenje na blizu in daleč.</p></div>
+        </article>
+        <article class="addon-feature">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 7v7m0-5-6-3m6 3 6-3M12 14l-5 7m5-7 5 7"/></svg></span>
+          <div><h3>Raztezanje in dihanje</h3><p>Kratke vodene vaje za vrat, ramena, zgornji del telesa in noge ter vaja za umirjeno dihanje.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="obvestila" class="addon-info-section" aria-labelledby="channels-title">
+      <div class="addon-info-heading">
+        <p class="eyebrow">OPOMNIK NA TVOJ NAČIN</p>
+        <h2 id="channels-title">Izberi, kje se prikaže opomnik.</h2>
+        <p>Za prikaz opomnika na spletni strani Firefox zahteva dovoljenje za izbrane domene.</p>
+      </div>
+      <div class="addon-channel-list">
+        <article class="addon-channel">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></span>
+          <div><h3>Sistemsko obvestilo</h3><p>Prikažeta ga Firefox in operacijski sistem; lahko ga opaziš tudi med delom v drugem programu.</p></div>
+        </article>
+        <article class="addon-channel">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+          <div><h3>Obvestilo na strani</h3><p>Opomnik se prikaže na spletni strani, ki jo uporabljaš, če za to dovoliš dostop.</p></div>
+        </article>
+        <article class="addon-channel">
+          <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></span>
+          <div><h3>Ločeno okno</h3><p>Opomnik se odpre v svojem oknu Firefoxa, katerega videz je odvisen od teme brskalnika.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="zasebnost" class="addon-info-section addon-privacy" aria-labelledby="privacy-title">
+      <span class="addon-detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <div>
+        <p class="eyebrow">ZASEBNOST</p>
+        <h2 id="privacy-title">Podatki ostanejo v Firefoxu</h2>
+        <p>Opomniki, omejitve, nastavitve in statistika se hranijo v lokalnem profilu. Vmes ne uporablja računa ali analitike in ne pošilja zgodovine brskanja na zunanji strežnik.</p>
+      </div>
+    </section>
+
+    <section id="github" class="addon-info-section addon-source" aria-labelledby="source-title">
+      <div>
+        <p class="eyebrow">ODPRTA KODA</p>
+        <h2 id="source-title">Izvorna koda</h2>
+        <p>Koda dodatka je javno dostopna na GitHubu.</p>
+      </div>
+      <a class="quiet-action" href="https://github.com/mihaknific/Vmes-opomniki-za-odmore-in-spletni-fokus" target="_blank" rel="noreferrer">Odpri GitHub <span aria-hidden="true">↗</span></a>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark" href="./" aria-label="Vmes, na vrh"><img src="icons/icon-48.svg?v=20261029-2" alt="">vmes<span>.</span></a>
+    <p>Vmes · opomniki za odmore in spletne vaje.</p>
+    <a class="site-support-link" href="https://mihaknific.github.io/podpora.html" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/></svg>Podprite Vmes <span aria-hidden="true">↗</span></a>
+    <a href="#namestitev">Namesti dodatek</a>
+  </footer>
+  <script src="vmes-home.js" defer></script>
+</body>
+</html>
