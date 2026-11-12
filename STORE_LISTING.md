@@ -60,4 +60,4 @@ Spletno-specifični opomniki in pravila fokusa zahtevajo dovoljenje samo za dome
 - premislek za mirno in prilagojeno delo.
 
 ## Final release note
-Vmes 0.9.2 prikaže opomnike ob pravem času, z ustrezno ikono in sporočilom, ter pomaga omejiti moteča spletna mesta. Nastavitve ostanejo v Firefoxu.
+Vmes 0.9.3 prikaže opomnike ob pravem času, z ustrezno ikono in sporočilom, ter pomaga omejiti moteča spletna mesta. Nastavitve ostanejo v Firefoxu.

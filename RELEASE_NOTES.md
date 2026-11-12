@@ -1,4 +1,12 @@
-# Vmes: opomniki za odmore in spletni fokus 0.9.2
+# Vmes: opomniki za odmore in spletni fokus 0.9.3
+
+## 0.9.3
+
+- Added four enabled starter reminders for water, eye breaks, stretching, and breathing.
+- Upgrade migration adds missing starter reminders while preserving user-created reminders.
+- Eye, stretching, and breathing reminders link to their matching GitHub Pages guides; users can choose click-to-open or immediate opening.
+- Water reminders do not open a website.
+- The default forest-green theme is retained, and saved user theme preferences remain unchanged.
 
 ## 0.9.2
 

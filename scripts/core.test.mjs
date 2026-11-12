@@ -10,7 +10,7 @@ const context = { crypto: globalThis.crypto, URL, Date, Math, Object, Set, Strin
 vm.createContext(context);
 vm.runInContext(source, context);
 const core = context.WebNudgeCore;
-assert.equal(core.VERSION, "0.9.2");
+assert.equal(core.VERSION, "0.9.3");
 assert.equal(core.normalizeHost("https://www.Example.com/path"), "example.com");
 assert.equal(JSON.stringify(core.originPatternsForHost("example.com")), JSON.stringify(["*://example.com/*", "*://*.example.com/*"]));
 assert.equal(core.validateDomain("example.com"), true);
@@ -35,6 +35,9 @@ assert.equal(core.normalizeReminder({ name: "Čas za vodo" }).icon, "water-glass
 assert.equal(core.normalizeReminder({ name: "Odmor za dihanje" }).icon, "wind");
 assert.equal(core.normalizeReminder({ name: "Razteg" }).icon, "dumbbell");
 assert.equal(core.normalizeReminder({ name: "Moj opomnik", icon: "calendar" }).icon, "calendar");
+assert.equal(core.normalizeReminder({ name: "Povezan opomnik" }).actionOpenTiming, "click");
+assert.equal(core.normalizeReminder({ name: "Povezan opomnik", actionOpenTiming: "immediate" }).actionOpenTiming, "immediate");
+assert.equal(core.normalizeReminder({ name: "Povezan opomnik", actionOpenTiming: "invalid" }).actionOpenTiming, "click");
 assert.equal(core.normalizeSettings({ soundName: "bell" }).soundName, "soft-click");
 assert.equal(core.normalizeSettings({ soundName: "chime" }).soundName, "soft-click");
 assert.equal(core.normalizeSettings({ soundName: "water-drop" }).soundName, "soft-click");

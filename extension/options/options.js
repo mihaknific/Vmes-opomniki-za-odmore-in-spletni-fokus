@@ -1,6 +1,7 @@
 const $ = id => document.getElementById(id);
 const { formatRemainingDuration } = WebNudgeCore;
 const STANDALONE_SETTINGS_KEY = "vmes-options-preview-settings";
+const PUBLIC_SITE_URL = "https://mihaknific.github.io/Vmes-opomniki-za-odmore-in-spletni-fokus/";
 
 function getStandaloneSettings() {
   try {
@@ -40,9 +41,10 @@ const state = async () => {
       ...getStandaloneSettings()
     },
     reminders: [
-      { id: "demo-1", name: "Odmor za oči", type: "interval", intervalMinutes: 10, enabled: true, message: "Poglejte za 20 sekund v daljavo in sprostite pogled.", notificationMode: "system", icon: "eye", actionType: "eyes", soundName: "gentle-bell", lastTriggeredAt: Date.now() - 300000 },
-      { id: "demo-2", name: "Kratek razteg", type: "interval", intervalMinutes: 20, enabled: true, message: "Vstanite, nežno raztegnite telo in sprostite ramena.", notificationMode: "system", icon: "stretch", actionType: "stretches", soundName: "gentle-switch", lastTriggeredAt: Date.now() - 1200000 },
-      { id: "demo-3", name: "Kozarec vode", type: "interval", intervalMinutes: 5, enabled: true, message: "Vzemite nekaj požirkov vode, če vam ustreza.", notificationMode: "system", icon: "water-glass", actionType: "none", soundName: "soft-click", lastTriggeredAt: Date.now() - 2500000 }
+      { id: "demo-1", name: "Kozarec vode", type: "interval", intervalMinutes: 5, enabled: true, message: "Vzemite nekaj požirkov vode, če vam ustreza.", notificationMode: "system", icon: "water-glass", actionType: "none", soundName: "soft-click", lastTriggeredAt: Date.now() - 2500000 },
+      { id: "demo-2", name: "Odmor za oči", type: "interval", intervalMinutes: 10, enabled: true, message: "Poglejte za 20 sekund v daljavo in sprostite pogled.", notificationMode: "system", icon: "eye", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}oci/`, actionOpenTiming: "click", soundName: "gentle-bell", lastTriggeredAt: Date.now() - 300000 },
+      { id: "demo-3", name: "Kratek razteg", type: "interval", intervalMinutes: 20, enabled: true, message: "Vstanite, nežno raztegnite telo in sprostite ramena.", notificationMode: "system", icon: "stretch", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}gibanje/`, actionOpenTiming: "click", soundName: "gentle-switch", lastTriggeredAt: Date.now() - 1200000 },
+      { id: "demo-4", name: "Dihalni premor", type: "interval", intervalMinutes: 45, enabled: true, message: "Ustavite se za trenutek in nekajkrat mirno vdihnite.", notificationMode: "system", icon: "wind", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}dihanje/`, actionOpenTiming: "click", soundName: "soft-click", lastTriggeredAt: Date.now() - 2700000 }
     ],
     history: [
       { id: "h-1", name: "Pogled stran od zaslona", status: "completed", timestamp: Date.now() - 1800000, channel: "system" },
@@ -142,10 +144,10 @@ function applyAppearance(settings = {}) {
 }
 
 const REMINDER_PRESETS = {
-  eyes: { name: "Odmor za oči", message: "Za nekaj trenutkov poglejte v daljavo in sprostite oči.", messageMode: "rotate", interval: 10, icon: "eye", actionType: "eyes", soundName: "gentle-bell" },
+  eyes: { name: "Odmor za oči", message: "Za nekaj trenutkov poglejte v daljavo in sprostite oči.", messageMode: "rotate", interval: 10, icon: "eye", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}oci/`, soundName: "gentle-bell" },
   water: { name: "Kozarec vode", message: "Čas za nekaj požirkov vode, če vam ustreza.", messageMode: "rotate", interval: 5, icon: "water-glass", actionType: "none", soundName: "soft-click" },
-  movement: { name: "Kratek razteg", message: "Vstanite, sprostite ramena in se nežno raztegnite.", messageMode: "rotate", interval: 20, icon: "stretch", actionType: "stretches", soundName: "gentle-switch" },
-  breathing: { name: "Dihalni premor", message: "Ustavite se za trenutek in nekajkrat mirno vdihnite.", messageMode: "rotate", interval: 45, icon: "wind", actionType: "breathing", soundName: "soft-click" },
+  movement: { name: "Kratek razteg", message: "Vstanite, sprostite ramena in se nežno raztegnite.", messageMode: "rotate", interval: 20, icon: "stretch", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}gibanje/`, soundName: "gentle-switch" },
+  breathing: { name: "Dihalni premor", message: "Ustavite se za trenutek in nekajkrat mirno vdihnite.", messageMode: "rotate", interval: 45, icon: "wind", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}dihanje/`, soundName: "soft-click" },
   custom: { name: "Moj opomnik", message: "Čas je za opomnik.", messageMode: "custom", interval: 30, icon: "bell", actionType: "none", soundName: "default" }
 };
 
@@ -815,6 +817,7 @@ function clearForm() {
   $("snooze").checked = true;
   $("type").value = "interval";
   if ($("action-type")) $("action-type").value = "eyes";
+  if ($("action-open-timing")) $("action-open-timing").value = "click";
   if ($("action-urls")) $("action-urls").value = "";
   if ($("action-url-mode")) $("action-url-mode").value = "iterate";
   updateActionUi();
@@ -841,6 +844,8 @@ function applyPreset(name) {
   updateReminderSoundSummary();
   if (preset.actionType && $("action-type")) {
     $("action-type").value = preset.actionType;
+    if ($("action-urls")) $("action-urls").value = preset.actionUrl || "";
+    if ($("action-open-timing")) $("action-open-timing").value = "click";
     updateActionUi();
   }
   updateMessageModeUi();
@@ -976,6 +981,7 @@ function fillForm(r) {
   setImagePreview(r.imageData || "");
   if ($("snooze")) $("snooze").checked = r.snoozeEnabled !== false;
   if ($("action-type")) $("action-type").value = r.actionType || "none";
+  if ($("action-open-timing")) $("action-open-timing").value = r.actionOpenTiming || "click";
   if ($("action-urls")) {
     const list = Array.isArray(r.actionUrls) && r.actionUrls.length ? r.actionUrls : (r.actionUrl ? [r.actionUrl] : []);
     $("action-urls").value = list.join("\n");
@@ -1074,7 +1080,9 @@ document.querySelectorAll('input[name="channel"]').forEach(cb => {
 function updateActionUi() {
   const type = $("action-type")?.value || "none";
   const urlField = $("action-url-field");
+  const timingField = $("action-open-timing-field");
   if (urlField) urlField.classList.toggle("hidden", type !== "url");
+  if (timingField) timingField.classList.toggle("hidden", type === "none");
 
   const previewIcon = $("action-preview-icon");
   const previewTitle = $("action-preview-title");
@@ -1119,6 +1127,7 @@ function updateActionUi() {
   };
 
   const item = data[type] || data.none;
+  const opensImmediately = $("action-open-timing")?.value === "immediate";
   if (previewIcon) {
     if (window.WebNudgeIcons && WebNudgeIcons.getUiSvg) {
       previewIcon.innerHTML = WebNudgeIcons.getUiSvg(item.uiKey, 24);
@@ -1127,7 +1136,9 @@ function updateActionUi() {
     }
   }
   if (previewTitle) previewTitle.textContent = item.title;
-  if (previewDesc) previewDesc.textContent = item.desc;
+  if (previewDesc) previewDesc.textContent = opensImmediately && type !== "none"
+    ? "Povezana stran se bo odprla samodejno, ko se prikaže opomnik."
+    : item.desc;
   if (previewBtn) {
     previewBtn.classList.toggle("hidden", !item.hasPreview);
     previewBtn.onclick = () => {
@@ -1149,10 +1160,14 @@ $("action-type")?.addEventListener("change", () => {
   updateMessageModeUi();
   updateReminderSummaryPreview();
 });
+$("action-open-timing")?.addEventListener("change", () => {
+  updateActionUi();
+  updateReminderSummaryPreview();
+});
 $("action-urls")?.addEventListener("input", updateReminderSummaryPreview);
 $("action-url-mode")?.addEventListener("change", updateReminderSummaryPreview);
 
-["name", "when", "site", "after", "schedule-time", "schedule-kind", "reminder-sound", "snooze", "action-type", "action-urls", "action-url-mode"].forEach(id => {
+["name", "when", "site", "after", "schedule-time", "schedule-kind", "reminder-sound", "snooze", "action-type", "action-urls", "action-url-mode", "action-open-timing"].forEach(id => {
   $(id)?.addEventListener("input", updateReminderSummaryPreview);
   $(id)?.addEventListener("change", updateReminderSummaryPreview);
 });
@@ -1190,6 +1205,7 @@ $("reminder-form").addEventListener("submit", async event => {
     notificationMode: selectedChannels.join("+"),
     snoozeEnabled: $("snooze").checked,
     actionType: $("action-type")?.value || "none",
+    actionOpenTiming: $("action-open-timing")?.value || "click",
     actionUrl: rawUrls[0] || "",
     actionUrls: rawUrls,
     actionUrlMode: $("action-url-mode")?.value || "iterate",

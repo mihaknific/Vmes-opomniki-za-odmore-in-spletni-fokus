@@ -4,7 +4,7 @@
 
 - Name: Vmes: opomniki za odmore in spletni fokus
 - English name: Vmes: Break Reminders & Website Focus
-- Version: 0.9.2
+- Version: 0.9.3
 - Summary: Opomniki za oči, vodo in odmore ter spletne omejitve za Firefox. Lokalno, brez računa ali analitike.
 - Categories: Productivity, Other
 - Language: Slovenian (source UI)

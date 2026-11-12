@@ -1,4 +1,4 @@
-# Vmes 0.9.2 — Quality Gate
+# Vmes 0.9.3 — Quality Gate
 
 Before publishing to Mozilla Add-ons, run:
 

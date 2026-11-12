@@ -1,5 +1,5 @@
 (() => {
-  const VERSION = "0.9.2";
+  const VERSION = "0.9.3";
   const VALID_TYPES = new Set(["interval", "once", "schedule", "site"]);
   const VALID_MODES = new Set([
     "system",
@@ -339,6 +339,7 @@
       notificationMode,
       imageData: typeof source.imageData === "string" && /^data:image\/(png|jpeg|webp|gif);base64,/i.test(source.imageData) && source.imageData.length <= 420000 ? source.imageData : "",
       actionType: ["none", "breathing", "eyes", "stretches", "url"].includes(source.actionType) ? source.actionType : "none",
+      actionOpenTiming: ["click", "immediate"].includes(source.actionOpenTiming) ? source.actionOpenTiming : "click",
       actionUrl: typeof source.actionUrl === "string" ? source.actionUrl.trim().slice(0, 500) : "",
       actionUrls: Array.isArray(source.actionUrls)
         ? source.actionUrls.map(u => String(u || "").trim().slice(0, 500)).filter(Boolean).slice(0, 20)

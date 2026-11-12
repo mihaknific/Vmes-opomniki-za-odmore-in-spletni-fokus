@@ -56,6 +56,6 @@ Open the breathing guide and try each technique, changing duration, pausing, res
 Smoke-test Windows 11, macOS, and Linux. Native notification appearance intentionally follows each OS; in-page/window channels provide the Vmes UI.
 
 
-## Automated 0.9.2 gate
+## Automated 0.9.3 gate
 - `npm test` runs static validation, shared-core and asset tests, breathing-preference tests, background integration tests, and site-build integration tests.
 - Validation checks strict UUID storage IDs, extension CSP, forbidden dynamic/network primitives, manifest MV3 structure, local asset references and required release files.

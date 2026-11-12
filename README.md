@@ -1,11 +1,14 @@
-# Vmes: opomniki za odmore in spletni fokus 0.9.2
+# Vmes: opomniki za odmore in spletni fokus 0.9.3
 
 **Firefoxova razširitev za opomnike, časovne omejitve in blokiranje spletnih strani.** Načrtujte odmore za oči, pitje vode ali raztezanje ter omejite čas na izbranih domenah ali jih blokirajte za več fokusa. Čas se meri samo v aktivnem zavihku. Brez računa, sledenja ali oddaljenih strežnikov; podatki ostanejo lokalno v Firefoxu.
 
-## Kaj je v 0.9.2
+## Kaj je v 0.9.3
 
-- prvi odštevalnik privzetega opomnika se ujema z izbranim intervalom: 10, 20 oziroma 5 minut
-- obstoječi privzeti opomniki se ob nadgradnji varno popravijo; uporabniški opomniki ostanejo nedotaknjeni
+- privzeto so vključeni štirje opomniki: voda (5 min), oči (10 min), razteg (20 min) in dihanje (45 min)
+- nadgradnja dopolni manjkajoče privzete opomnike, ne da bi podvojila obstoječe ali spremenila uporabniške
+- opomniki za oči, razteg in dihanje odprejo ustrezno stran GitHub Pages po kliku na »Začni«; čas odpiranja je mogoče spremeniti na takojšnje
+- voda ostane samo obvestilo brez odpiranja spletne strani
+- zelena tema Vmes ostaja privzeta; že shranjena izbira teme uporabnika se pri nadgradnji ohrani
 - sistemska obvestila uporabljajo ikono in besedilo posameznega opomnika
 - predloge opomnikov lahko samodejno izmenjujejo izvirna tematska sporočila; uporabnik lahko namesto tega nastavi svoje stalno besedilo
 - gumb »Odpri izbrano« v uvodnem zaslonu odpre nastavitve v istem zavihku in napako jasno prikaže
@@ -16,7 +19,7 @@
 
 - 3-koračni wizard za ustvarjanje in urejanje opomnikov
 - intervalni, enkratni, dnevni, tedenski in spletno specifični opomniki
-- privzeti intervali: oči 10 minut, razteg 20 minut, voda 5 minut
+- privzeti intervali: voda 5 minut, oči 10 minut, razteg 20 minut in dihanje 45 minut
 - dnevne časovne omejitve in stroga blokada izbranih spletnih strani
 - dejanski izračun naslednjega opomnika v popupu
 - robustnejši scheduler: ponavljajoči se opomniki se po proženju znova nastavijo

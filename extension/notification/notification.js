@@ -75,7 +75,10 @@ async function load() {
         stretches: "Odpri vaje med sedenjem",
         url: "Odpri spletno stran"
       };
-      doneBtn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:6px"><polygon points="5 3 19 12 5 21 5 3"/></svg>${labels[r.actionType] || "Začni"}`;
+      const label = r.actionOpenTiming === "immediate"
+        ? "Zaključi opomnik"
+        : (labels[r.actionType] || "Začni");
+      doneBtn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:6px"><polygon points="5 3 19 12 5 21 5 3"/></svg>${label}`;
     }
   } else {
     document.getElementById("title").textContent = "Preizkusno obvestilo";

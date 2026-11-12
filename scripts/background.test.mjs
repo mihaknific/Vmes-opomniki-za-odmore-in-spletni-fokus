@@ -30,6 +30,7 @@ const alarmsData = {};
 const notificationsData = {};
 const windowsData = {};
 const tabUpdates = [];
+const createdTabs = [];
 const removedTabs = [];
 
 const mockBrowser = {
@@ -88,7 +89,7 @@ const mockBrowser = {
   },
   tabs: {
     query: async () => [{ id: 10, active: true, url: "https://example.com" }],
-    create: async () => ({ id: 11 }),
+    create: async tab => { createdTabs.push(tab); return { id: 11 }; },
     get: async id => ({ id }),
     remove: async tabId => { removedTabs.push(tabId); return true; },
     update: async (tabId, changes) => { tabUpdates.push({ tabId, changes }); return { id: tabId, ...changes }; },
@@ -272,29 +273,49 @@ async function runTests() {
   // 1. Install lifecycle test
   for (const fn of listeners.installed) await fn({ reason: "install" });
   let state = await send({ type: "GET_STATE" });
-  assert.equal(state.currentVersion, "0.9.2");
-  assert.equal(state.reminders.length, 3);
-  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.intervalMinutes)), JSON.stringify([10, 20, 5]));
-  assert.equal(new Set(state.reminders.map(reminder => reminder.intervalMinutes)).size, 3, "Default reminders should have distinct intervals");
-  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.name)), JSON.stringify(["Odmor za oči", "Kratek razteg", "Kozarec vode"]));
+  assert.equal(state.currentVersion, "0.9.3");
+  assert.equal(state.reminders.length, 4);
+  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.intervalMinutes)), JSON.stringify([5, 10, 20, 45]));
+  assert.equal(new Set(state.reminders.map(reminder => reminder.intervalMinutes)).size, 4, "Default reminders should have distinct intervals");
+  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.name)), JSON.stringify(["Kozarec vode", "Odmor za oči", "Kratek razteg", "Dihalni premor"]));
   assert.ok(state.reminders.every(reminder => reminder.enabled && reminder.message.length > 0), "Default reminders should be active and have descriptions");
-  assert.equal(state.reminders[0].icon, "eye");
-  assert.equal(state.reminders[1].icon, "stretch");
-  assert.equal(state.reminders[2].icon, "water-glass");
+  assert.equal(state.reminders[0].icon, "water-glass");
+  assert.equal(state.reminders[1].icon, "eye");
+  assert.equal(state.reminders[2].icon, "stretch");
+  assert.equal(state.reminders[3].icon, "wind");
   assert.ok(state.reminders.every(reminder => reminder.messageMode === "rotate"), "Fresh-install starter reminders should rotate contextual messages");
   assert.equal(state.reminders.every(reminder => !("intervalPhaseMinutes" in reminder)), true);
-  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.actionType)), JSON.stringify(["eyes", "stretches", "none"]));
-  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.soundName)), JSON.stringify(["gentle-bell", "gentle-switch", "soft-click"]));
+  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.actionType)), JSON.stringify(["none", "url", "url", "url"]));
+  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.soundName)), JSON.stringify(["soft-click", "gentle-bell", "gentle-switch", "soft-click"]));
+  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.actionOpenTiming)), JSON.stringify(["click", "click", "click", "click"]));
+  assert.equal(state.reminders[0].actionUrl, "");
+  assert.equal(state.reminders[1].actionUrl, "https://mihaknific.github.io/Vmes-opomniki-za-odmore-in-spletni-fokus/oci/");
+  assert.equal(state.reminders[2].actionUrl, "https://mihaknific.github.io/Vmes-opomniki-za-odmore-in-spletni-fokus/gibanje/");
+  assert.equal(state.reminders[3].actionUrl, "https://mihaknific.github.io/Vmes-opomniki-za-odmore-in-spletni-fokus/dihanje/");
   assert.equal(state.settings.soundName, "soft-click");
 
   const legacyDefaults = state.reminders.map(reminder => {
     const copy = { ...reminder };
     delete copy.intervalPhaseMinutes;
-    copy.intervalMinutes = copy.actionType === "eyes" ? 20 : copy.actionType === "stretches" ? 45 : 60;
+    copy.intervalMinutes = ({
+      "Kozarec vode": 60,
+      "Odmor za oči": 20,
+      "Kratek razteg": 45,
+      "Dihalni premor": 45
+    })[copy.name];
+    copy.actionType = ({
+      "Kozarec vode": "none",
+      "Odmor za oči": "eyes",
+      "Kratek razteg": "stretches",
+      "Dihalni premor": "breathing"
+    })[copy.name];
+    delete copy.actionUrl;
+    delete copy.actionUrls;
+    delete copy.actionOpenTiming;
     return copy;
   });
   legacyDefaults.push({
-    ...legacyDefaults[0],
+    ...legacyDefaults[1],
     id: "00000000-0000-4000-8000-000000000033",
     name: "Moj prilagojeni opomnik",
     intervalMinutes: 33
@@ -303,10 +324,19 @@ async function runTests() {
   storageData.starterReminderDefaultsVersion = 0;
   for (const fn of listeners.installed) await fn({ reason: "update" });
   state = await send({ type: "GET_STATE" });
-  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.intervalMinutes)), JSON.stringify([10, 20, 5, 33]));
+  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.intervalMinutes)), JSON.stringify([5, 10, 20, 45, 33]));
   assert.equal(state.reminders.some(reminder => reminder.name === "Moj prilagojeni opomnik" && reminder.intervalMinutes === 33), true, "Starter migration should preserve customized reminders");
   assert.equal(state.reminders.every(reminder => !("intervalPhaseMinutes" in reminder)), true);
-  assert.equal(storageData.starterReminderDefaultsVersion, 2, "Starter reminder migration should run once on update");
+  assert.equal(storageData.starterReminderDefaultsVersion, 3, "Starter reminder migration should run once on update");
+  assert.equal(state.reminders.find(reminder => reminder.name === "Odmor za oči").actionUrl, "https://mihaknific.github.io/Vmes-opomniki-za-odmore-in-spletni-fokus/oci/");
+  assert.equal(state.reminders.find(reminder => reminder.name === "Dihalni premor").actionType, "url", "Migration should add the breathing starter with its linked guide");
+
+  storageData.reminders = state.reminders.filter(reminder => ["Kozarec vode", "Odmor za oči"].includes(reminder.name));
+  storageData.starterReminderDefaultsVersion = 2;
+  for (const fn of listeners.installed) await fn({ reason: "update" });
+  state = await send({ type: "GET_STATE" });
+  assert.equal(JSON.stringify(state.reminders.map(reminder => reminder.name)), JSON.stringify(["Kozarec vode", "Odmor za oči", "Kratek razteg", "Dihalni premor"]));
+  assert.equal(state.reminders.length, 4, "Upgrade should add missing starter reminders without duplicating existing ones");
 
   // 2. Startup lifecycle test
   for (const fn of listeners.startup) await fn();
@@ -327,6 +357,41 @@ async function runTests() {
   });
   assert.equal(resInterval.ok, true);
   const intervalId = resInterval.reminder.id;
+
+  const immediateReminder = await send({
+    type: "SAVE_REMINDER",
+    reminder: {
+      name: "Immediate URL reminder",
+      type: "interval",
+      intervalMinutes: 30,
+      enabled: true,
+      actionType: "url",
+      actionUrl: "https://example.org/guide",
+      actionOpenTiming: "immediate"
+    }
+  });
+  assert.equal(immediateReminder.ok, true);
+  const tabCountBeforeImmediate = createdTabs.length;
+  await listeners.alarm[0]({ name: `reminder:${immediateReminder.reminder.id}` });
+  assert.equal(JSON.stringify(createdTabs.slice(tabCountBeforeImmediate)), JSON.stringify([{ url: "https://example.org/guide" }]));
+  await send({ type: "REMINDER_ACTION", reminderId: immediateReminder.reminder.id, action: "completed" });
+  assert.equal(createdTabs.length, tabCountBeforeImmediate + 1, "Immediate links should not open a second time when the reminder is completed");
+
+  const clickReminder = await send({
+    type: "SAVE_REMINDER",
+    reminder: {
+      name: "Click URL reminder",
+      type: "interval",
+      intervalMinutes: 30,
+      enabled: true,
+      actionType: "url",
+      actionUrl: "https://example.org/click-guide"
+    }
+  });
+  assert.equal(clickReminder.ok, true);
+  const tabCountBeforeClick = createdTabs.length;
+  await send({ type: "REMINDER_ACTION", reminderId: clickReminder.reminder.id, action: "completed" });
+  assert.equal(JSON.stringify(createdTabs.slice(tabCountBeforeClick)), JSON.stringify([{ url: "https://example.org/click-guide" }]));
 
   // 4. Add once reminder in future
   const futureIso = new Date(Date.now() + 60000).toISOString();

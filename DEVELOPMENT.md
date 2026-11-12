@@ -1,6 +1,6 @@
 # DEVELOPMENT.md
 
-## Trenutni status: 0.9.2
+## Trenutni status: 0.9.3
 
 V tej različici je cilj predvsem pravilno obnašanje in čist UX, ne maksimalno število funkcij.
 
@@ -46,7 +46,7 @@ To omogoča bolj smiselno statistiko kot preprosto štetje vseh vrstic v zgodovi
 - veljavnost `manifest.json`;
 - obstoj lokalnih asset referenc;
 - prisotnost obveznih map/datotek;
-- konsistentnost verzije 0.9.2;
+- konsistentnost verzije 0.9.3;
 - ikone, zvočne prednastavitve in njihovo prisotnost v izbirniku.
 - uvoz/izvoz dihalnih nastavitev, background integracijo ter gradnjo in poti statične strani.
 - pravilne prve intervale, migracijo začetnih opomnikov, sistemske ikone in navigacijo uvodnega zaslona.

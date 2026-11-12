@@ -7,6 +7,7 @@ const {
 
 const MAX_HISTORY = 1000;
 const MAX_REMINDERS = 100;
+const PUBLIC_SITE_URL = "https://mihaknific.github.io/Vmes-opomniki-za-odmore-in-spletni-fokus/";
 const TRACKING_ALARM = "web-nudge:site-tracking";
 const HOUSEKEEPING_ALARM = "web-nudge:housekeeping";
 const MAX_SESSION_GAP_MS = 90_000;
@@ -21,45 +22,62 @@ function withLock(task) {
 function makeDefaultReminders() {
   const now = Date.now();
   return [
-    { id: crypto.randomUUID(), name: "Odmor za oči", type: "interval", intervalMinutes: 10, enabled: true, message: "Poglejte za 20 sekund v daljavo in sprostite pogled.", messageMode: "rotate", messageCursor: 0, notificationMode: "system", snoozeEnabled: true, icon: "eye", actionType: "eyes", soundName: "gentle-bell", createdAt: now, updatedAt: now, lastTriggeredAt: now },
-    { id: crypto.randomUUID(), name: "Kratek razteg", type: "interval", intervalMinutes: 20, enabled: true, message: "Vstanite, nežno raztegnite telo in sprostite ramena.", messageMode: "rotate", messageCursor: 0, notificationMode: "system", snoozeEnabled: true, icon: "stretch", actionType: "stretches", soundName: "gentle-switch", createdAt: now, updatedAt: now, lastTriggeredAt: now },
-    { id: crypto.randomUUID(), name: "Kozarec vode", type: "interval", intervalMinutes: 5, enabled: true, message: "Vzemite nekaj požirkov vode, če vam ustreza.", messageMode: "rotate", messageCursor: 0, notificationMode: "system", snoozeEnabled: true, icon: "water-glass", actionType: "none", soundName: "soft-click", createdAt: now, updatedAt: now, lastTriggeredAt: now }
+    { id: crypto.randomUUID(), name: "Kozarec vode", type: "interval", intervalMinutes: 5, enabled: true, message: "Vzemite nekaj požirkov vode, če vam ustreza.", messageMode: "rotate", messageCursor: 0, notificationMode: "system", snoozeEnabled: true, icon: "water-glass", actionType: "none", soundName: "soft-click", createdAt: now, updatedAt: now, lastTriggeredAt: now },
+    { id: crypto.randomUUID(), name: "Odmor za oči", type: "interval", intervalMinutes: 10, enabled: true, message: "Poglejte za 20 sekund v daljavo in sprostite pogled.", messageMode: "rotate", messageCursor: 0, notificationMode: "system", snoozeEnabled: true, icon: "eye", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}oci/`, actionUrls: [`${PUBLIC_SITE_URL}oci/`], actionOpenTiming: "click", soundName: "gentle-bell", createdAt: now, updatedAt: now, lastTriggeredAt: now },
+    { id: crypto.randomUUID(), name: "Kratek razteg", type: "interval", intervalMinutes: 20, enabled: true, message: "Vstanite, nežno raztegnite telo in sprostite ramena.", messageMode: "rotate", messageCursor: 0, notificationMode: "system", snoozeEnabled: true, icon: "stretch", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}gibanje/`, actionUrls: [`${PUBLIC_SITE_URL}gibanje/`], actionOpenTiming: "click", soundName: "gentle-switch", createdAt: now, updatedAt: now, lastTriggeredAt: now },
+    { id: crypto.randomUUID(), name: "Dihalni premor", type: "interval", intervalMinutes: 45, enabled: true, message: "Ustavite se za trenutek in nekajkrat mirno vdihnite.", messageMode: "rotate", messageCursor: 0, notificationMode: "system", snoozeEnabled: true, icon: "wind", actionType: "url", actionUrl: `${PUBLIC_SITE_URL}dihanje/`, actionUrls: [`${PUBLIC_SITE_URL}dihanje/`], actionOpenTiming: "click", soundName: "soft-click", createdAt: now, updatedAt: now, lastTriggeredAt: now }
   ];
 }
 
 async function migrateStarterReminderIntervals() {
   const current = await browser.storage.local.get({ reminders: [], starterReminderDefaultsVersion: 0 });
-  if (Number(current.starterReminderDefaultsVersion) >= 2) return;
+  if (Number(current.starterReminderDefaultsVersion) >= 3) return;
 
   const migratedDefaults = [
-    { name: "Odmor za oči", message: "Poglejte za 20 sekund v daljavo in sprostite pogled.", icon: "eye", actionType: "eyes", oldMinutes: 20, minutes: 10 },
-    { name: "Kratek razteg", message: "Vstanite, nežno raztegnite telo in sprostite ramena.", icon: "stretch", actionType: "stretches", oldMinutes: 45, minutes: 20 },
-    { name: "Kozarec vode", message: "Vzemite nekaj požirkov vode, če vam ustreza.", icon: "water-glass", actionType: "none", oldMinutes: 60, minutes: 5 }
+    { name: "Kozarec vode", icon: "water-glass", actionType: "none", oldMinutes: 60, minutes: 5 },
+    { name: "Odmor za oči", icon: "eye", actionType: "eyes", oldMinutes: 20, minutes: 10, url: `${PUBLIC_SITE_URL}oci/` },
+    { name: "Kratek razteg", icon: "stretch", actionType: "stretches", oldMinutes: 45, minutes: 20, url: `${PUBLIC_SITE_URL}gibanje/` },
+    { name: "Dihalni premor", icon: "wind", actionType: "breathing", oldMinutes: 45, minutes: 45, url: `${PUBLIC_SITE_URL}dihanje/` }
   ];
   const reminders = Array.isArray(current.reminders) ? current.reminders.map(reminder => {
     const starter = migratedDefaults.find(item =>
       reminder?.type === "interval"
       && reminder.name === item.name
-      && reminder.message === item.message
       && reminder.icon === item.icon
       && reminder.actionType === item.actionType
-      && (Number(reminder.intervalMinutes) === item.oldMinutes
-        || Number(reminder.intervalMinutes) === item.minutes)
     );
     if (!starter) return reminder;
     const now = Date.now();
     const migrated = { ...reminder };
     delete migrated.intervalPhaseMinutes;
+    const hasStarterInterval = Number(reminder.intervalMinutes) === starter.oldMinutes
+      || Number(reminder.intervalMinutes) === starter.minutes;
     return {
       ...migrated,
-      intervalMinutes: starter.minutes,
-      createdAt: now,
-      lastTriggeredAt: now,
-      updatedAt: now
+      ...(hasStarterInterval ? {
+        intervalMinutes: starter.minutes,
+        createdAt: now,
+        lastTriggeredAt: now,
+        updatedAt: now
+      } : {}),
+      ...(starter.url ? {
+        actionType: "url",
+        actionUrl: starter.url,
+        actionUrls: [starter.url],
+        actionUrlMode: "iterate",
+        actionUrlLastIndex: -1,
+        actionOpenTiming: "click"
+      } : {})
     };
   }) : [];
 
-  await saveState({ reminders, starterReminderDefaultsVersion: 2 });
+  const starterReminders = makeDefaultReminders();
+  for (const starter of starterReminders) {
+    if (reminders.some(reminder => reminder?.name === starter.name)) continue;
+    if (reminders.length >= MAX_REMINDERS) break;
+    reminders.push(starter);
+  }
+  await saveState({ reminders, starterReminderDefaultsVersion: 3 });
 }
 
 const HISTORY_STATUSES = new Set(["shown", "completed", "snoozed", "dismissed", "timeout", "quiet-hours", "unavailable", "test", "paused"]);
@@ -328,6 +346,14 @@ async function showReminder(reminder, { isSnooze = false, ignoreQuiet = false, p
     if (await showInPageOnActiveTab(latest, settings)) { result.shown = true; result.channels.push("inpage"); }
   }
 
+  if (!preview && result.shown && latest.actionType !== "none" && latest.actionOpenTiming === "immediate") {
+    try {
+      await openReminderAction(latest);
+    } catch (error) {
+      console.error("Could not open reminder action:", error);
+    }
+  }
+
   await recordHistory({
     reminderId: latest.id, name: latest.name,
     status: preview ? "test" : (result.shown ? "shown" : "unavailable"),
@@ -362,6 +388,41 @@ async function closeReminderWindows(reminderId) {
   await saveState({ notificationWindows });
 }
 
+async function openReminderAction(reminder) {
+  let targetUrl = "";
+  if (reminder.actionType === "breathing") {
+    targetUrl = browser.runtime.getURL("exercises/breathing.html");
+  } else if (reminder.actionType === "eyes") {
+    targetUrl = browser.runtime.getURL("exercises/eyes.html");
+  } else if (reminder.actionType === "stretches") {
+    const STRETCH_GROUPS = ["neck", "upper", "legs"];
+    const previousIndex = Number.isInteger(reminder.stretchGroupIndex) ? reminder.stretchGroupIndex : -1;
+    const nextIndex = (previousIndex + 1) % STRETCH_GROUPS.length;
+    await updateReminder(reminder.id, { stretchGroupIndex: nextIndex });
+    targetUrl = browser.runtime.getURL(`exercises/stretches.html?group=${STRETCH_GROUPS[nextIndex]}`);
+  } else if (reminder.actionType === "url") {
+    const rawList = Array.isArray(reminder.actionUrls) && reminder.actionUrls.length
+      ? reminder.actionUrls
+      : (reminder.actionUrl ? [reminder.actionUrl] : []);
+    const cleanUrls = rawList
+      .map(url => String(url || "").trim())
+      .filter(Boolean)
+      .map(url => (/^https?:\/\//i.test(url) ? url : "https://" + url));
+
+    if (cleanUrls.length) {
+      if (reminder.actionUrlMode === "all") {
+        for (const url of cleanUrls) await browser.tabs.create({ url });
+        return;
+      }
+      const previousIndex = Number.isInteger(reminder.actionUrlLastIndex) ? reminder.actionUrlLastIndex : -1;
+      const nextIndex = (previousIndex + 1) % cleanUrls.length;
+      targetUrl = cleanUrls[nextIndex];
+      await updateReminder(reminder.id, { actionUrlLastIndex: nextIndex });
+    }
+  }
+  if (targetUrl) await browser.tabs.create({ url: targetUrl });
+}
+
 async function actionForReminder(reminderId, action, extra = {}) {
   const reminder = await getReminder(reminderId);
   await recordHistory({ reminderId, name: reminder?.name || "Vmes", status: action, ...extra });
@@ -370,49 +431,14 @@ async function actionForReminder(reminderId, action, extra = {}) {
   await closeReminderWindows(reminderId);
 
   // Če je bila izbrana akcija (aktivnost/vaja ali spletna povezava) in uporabnik potrdi/začne
-  if ((action === "completed" || action === "start_activity") && reminder?.actionType && reminder.actionType !== "none") {
+  if ((action === "completed" || action === "start_activity")
+    && reminder?.actionType && reminder.actionType !== "none"
+    && reminder.actionOpenTiming !== "immediate") {
     try {
-      let targetUrl = "";
-      if (reminder.actionType === "breathing") {
-        targetUrl = browser.runtime.getURL("exercises/breathing.html");
-      } else if (reminder.actionType === "eyes") {
-        targetUrl = browser.runtime.getURL("exercises/eyes.html");
-      } else if (reminder.actionType === "stretches") {
-        // Rotacija med skupinami vaj za telo.
-        const STRETCH_GROUPS = ["neck", "upper", "legs"];
-        const prevIdx = Number.isInteger(reminder.stretchGroupIndex) ? reminder.stretchGroupIndex : -1;
-        const nextIdx = (prevIdx + 1) % STRETCH_GROUPS.length;
-        const group = STRETCH_GROUPS[nextIdx];
-        await updateReminder(reminder.id, { stretchGroupIndex: nextIdx });
-        targetUrl = browser.runtime.getURL(`exercises/stretches.html?group=${group}`);
-      } else if (reminder.actionType === "url") {
-        const rawList = Array.isArray(reminder.actionUrls) && reminder.actionUrls.length
-          ? reminder.actionUrls
-          : (reminder.actionUrl ? [reminder.actionUrl] : []);
-        const cleanUrls = rawList
-          .map(u => String(u || "").trim())
-          .filter(Boolean)
-          .map(u => (/^https?:\/\//i.test(u) ? u : "https://" + u));
-
-        if (cleanUrls.length > 0) {
-          if (reminder.actionUrlMode === "all") {
-            for (const u of cleanUrls) {
-              await browser.tabs.create({ url: u });
-            }
-          } else {
-            // "iterate" mode: rotacija povezav po vrsti
-            const prevIdx = Number.isInteger(reminder.actionUrlLastIndex) ? reminder.actionUrlLastIndex : -1;
-            const nextIdx = (prevIdx + 1) % cleanUrls.length;
-            const target = cleanUrls[nextIdx];
-            await updateReminder(reminder.id, { actionUrlLastIndex: nextIdx });
-            if (target) await browser.tabs.create({ url: target });
-          }
-        }
-      }
-      if (targetUrl) {
-        await browser.tabs.create({ url: targetUrl });
-      }
-    } catch {}
+      await openReminderAction(reminder);
+    } catch (error) {
+      console.error("Could not open reminder action:", error);
+    }
   }
 }
 
@@ -689,7 +715,7 @@ async function resetEverything() {
   await saveState({
     settings: { ...DEFAULT_SETTINGS },
     reminders: makeDefaultReminders(),
-    starterReminderDefaultsVersion: 2,
+    starterReminderDefaultsVersion: 3,
     history: [], notificationMap: {}, notificationWindows: {}, activeSiteSession: null, siteUsage: {}, siteLimitPauses: {}
   });
   await syncReminderAlarms();
@@ -698,7 +724,7 @@ async function resetEverything() {
 browser.runtime.onInstalled.addListener(({ reason }) => withLock(async () => {
   const current = await browser.storage.local.get(["settings", "reminders"]);
   if (!current.settings) await saveState({ settings: DEFAULT_SETTINGS });
-  if (!current.reminders) await saveState({ reminders: makeDefaultReminders(), starterReminderDefaultsVersion: 2 });
+  if (!current.reminders) await saveState({ reminders: makeDefaultReminders(), starterReminderDefaultsVersion: 3 });
   else await saveState({ settings: normalizeSettings(current.settings) });
   if (reason === "update") await migrateStarterReminderIntervals();
   await cleanupRuntimeState();

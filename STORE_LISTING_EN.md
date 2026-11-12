@@ -51,4 +51,4 @@ Website reminders and focus rules request access only to the selected domains, w
 - calm workflow support for focused work.
 
 ## Final release note
-Vmes 0.9.2 delivers reminders at the displayed time with their matching icons and messages, and helps limit distracting websites. Your settings stay in Firefox.
+Vmes 0.9.3 delivers reminders at the displayed time with their matching icons and messages, and helps limit distracting websites. Your settings stay in Firefox.
